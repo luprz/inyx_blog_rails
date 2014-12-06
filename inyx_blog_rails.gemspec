@@ -7,10 +7,10 @@ require "inyx_blog_rails/version"
 Gem::Specification.new do |s|
   s.name        = "inyx_blog_rails"
   s.version     = InyxBlogRails::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
+  s.authors     = ["TODO: gbrlmrllo"]
+  s.email       = ["TODO: gbrlmrllo@gmail.com"]
   s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of InyxBlogRails."
+  s.summary     = "TODO: InyxBlogRails is gem blog integrate to inyxmater"
   s.description = "TODO: Description of InyxBlogRails."
   s.license     = "MIT"
 
@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.1.4"
+  s.add_dependency "simple_form"
+  s.add_dependency "haml_rails"
 
   s.add_development_dependency "sqlite3"
 end

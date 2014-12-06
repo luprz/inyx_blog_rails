@@ -1,0 +1,33 @@
+= content_for(:title, "Admin - Post | #{@post.title}")
+%div{ style: "padding:30px; padding-bottom:0px;"}
+	.panel.panel-default
+		.panel-heading
+			%i.fa.fa-exclamation-circle
+			= t('post.info')
+		.panel-body
+			%label= t('post.title')+': '
+			= @post.title
+			%br/
+			%label= t('post.autor')+': '
+			= @post.autor
+			%br/
+			%label= t('post.content')+': '
+			= @post.content.html_safe
+			%br/
+			%label= t('post.image')+': '
+			= @post.image
+			%br/
+			%label= t('post.public')+': '
+			= @post.public ? "<i class='fa fa-check-circle'></i>".html_safe : "<i class='fa fa-minus-circle'></i>".html_safe
+			%br/
+			%label= t('post.comments_open')+': '
+			= @post.comments_open ? "<i class='fa fa-check-circle'></i>".html_safe : "<i class='fa fa-minus-circle'></i>".html_safe
+			%br/
+			%label= t('post.likes_enabled')+': '
+			= @post.likes_enabled ? "<i class='fa fa-check-circle'></i>".html_safe : "<i class='fa fa-minus-circle'></i>".html_safe
+			%br/
+			%label= t('post.shared_enabled')+': '
+			= @post.shared_enabled ? "<i class='fa fa-check-circle'></i>".html_safe : "<i class='fa fa-minus-circle'></i>".html_safe
+		.panel-footer
+			= link_to t('admin.actions.edit'), edit_post_path(@post), class: "btn btn-warning pull-right", style: "color:white"
+			.clearfix

@@ -1,0 +1,7 @@
+es:
+  attributes:
+  engine:
+    post: "Post"
+  post:
+    info: "Información"
+  admin:

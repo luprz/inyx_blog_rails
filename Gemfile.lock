@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     inyx_blog_rails (0.0.1)
-      rails (~> 4.1.6)
+      rails (~> 4.1.4)
 
 GEM
   remote: https://rubygems.org/
