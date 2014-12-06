@@ -49,9 +49,14 @@
                   %i.fa.fa-trash-o
             %tr{"ng-show" => "!posts.data.length"}
               %td{:style => "width:100%"}
-                %center
-                  %i.fa.fa-frown-o
-                  No hay Usuarios.
+                - unless @posts.empty?
+                  %center
+                    %i.fa.fa-spinner.fa-spin{ style: "font-size:30px; margin-bottom:10px;"}
+                    %br/
+                    Cargando
+                - else
+                  %center
+                    No hay registros
 
               
       .panel-footer

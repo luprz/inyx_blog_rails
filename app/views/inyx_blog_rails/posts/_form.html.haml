@@ -9,19 +9,60 @@
 				%br/
 				= f.input :content, label: false, input_html: { class: "tinymce", style: "height: 200px;" }
 				%br/
-				= f.input :image, label: false, input_html: { class: "form-control", placeholder: 'image' }
+				- unless @post.image.blank?
+					= image_tag @post.image, class: "thumbnail", style: "width:200px;"
+					%center
+						= f.input :image, label: false, as: :file, input_html: { class: "form-control filestyle", placeholder: 'image', "data-buttonBefore" => false, "data-input" => false, "data-buttonText" => params[:action] == "new" ? "Subir imágen" : "Cambiar imágen" }
+				- else 
+					= f.input :image, label: false, as: :file, input_html: { class: "form-control filestyle", placeholder: 'image', "data-buttonBefore" => false, "data-input" => false, "data-buttonText" => params[:action] == "new" ? "Subir imágen" : "Cambiar imágen" }
+				%br/
+				= f.input :tag_list, label: false, input_html: { class: "form-control tagsinput", placeholder: 'tags', "data-role"=>"tagsinput" }
 				%br/
 				.row
 					.col-lg-3.col-md-3.col-sm-3
-						= f.input :public, input_html: { style: "margin:0px;" }
+						%center
+							= f.input :public, input_html: { style: "margin:0px;", class: 'checkstyle' }
 					.col-lg-3.col-md-3.col-sm-3
-						= f.input :comments_open, input_html: { style: "margin:0px;"  }
+						%center
+							= f.input :comments_open, input_html: { style: "margin:0px;", class: 'checkstyle' }
 					.col-lg-3.col-md-3.col-sm-3
-						= f.input :likes_enabled, input_html: { style: "margin:0px;" }
+						%center
+							= f.input :likes_enabled, input_html: { style: "margin:0px;", class: 'checkstyle'}
 					.col-lg-3.col-md-3.col-sm-3
-						= f.input :shared_enabled, input_html: { style: "margin:0px;" }
+						%center
+							= f.input :shared_enabled, input_html: { style: "margin:0px;", class: 'checkstyle'}
 		.panel-footer
-			= f.submit t('admin.actions.edit'), class: "btn btn-warning pull-right"
+			= f.submit params[:action] == 'new' ? t('helpers.submit.create') : t('helpers.submit.update'), class: "btn btn-warning pull-right"
 			.clearfix
 
 = tinymce :alternate
+
+:javascript
+	$("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
+
+	$(".checkstyle").bootstrapSwitch({
+		offColor: 'danger',
+		onColor: 'warning',
+		onText: 'Si',
+		offText: 'No',
+		animate: true,
+		size: 'mini'
+	});
+
+	$('.filestyle').each(function() {
+		var $this = $(this), options = {
+			'input' : $this.attr('data-input') === 'false' ? false : true,
+			'icon' : $this.attr('data-icon') === 'false' ? false : true,
+			'buttonBefore' : $this.attr('data-buttonBefore') === 'true' ? true : false,
+			'disabled' : $this.attr('data-disabled') === 'true' ? true : false,
+			'size' : $this.attr('data-size'),
+			'buttonText' : $this.attr('data-buttonText'),
+			'buttonName' : $this.attr('data-buttonName'),
+			'iconName' : $this.attr('data-iconName'),
+			'badge' : $this.attr('data-badge') === 'false' ? false : true
+		};
+		$this.filestyle(options);
+	});
+
+
+

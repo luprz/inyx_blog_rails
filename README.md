@@ -18,6 +18,7 @@ Añadir la siguiente linea a su Gemfile
 
 ```ruby
 gem 'inyx_blog_rails', path: '../inyx_blog_rails'
+gem 'acts-as-taggable-on', '~> 3.4'
 ```
 
 Ubicarse en la ruta del proyecto desde la terminal y ejecutar
@@ -27,7 +28,8 @@ Bundle install
 ```
 
 ```ruby
-rake inyx_blog_rails:install:migrations #esto copiara un migrate en su main app
+rake inyx_blog_rails:install:migrations
+rake acts_as_taggable_on_engine:install:migrations
 rake db:migrate
 ```
 

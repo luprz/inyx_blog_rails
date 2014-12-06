@@ -9,25 +9,36 @@
 			= @post.title
 			%br/
 			%label= t('post.autor')+': '
-			= @post.autor
+			= @post.user.name
 			%br/
-			%label= t('post.content')+': '
-			= @post.content.html_safe
+			.panel.panel-warning{ style: 'margin:0px; margin-top:10px;'}
+				.panel-body
+					= raw @post.content
 			%br/
 			%label= t('post.image')+': '
-			= @post.image
+			- unless @post.image.blank?
+				= image_tag @post.image, class: "thumbnail"
+			- else
+				Sin imágen
 			%br/
-			%label= t('post.public')+': '
-			= @post.public ? "<i class='fa fa-check-circle'></i>".html_safe : "<i class='fa fa-minus-circle'></i>".html_safe
+			.row{ style: 'margin-top:10px;'}
+				.col-lg-3.col-md-3.col-sm-3
+					%label= t('post.public')+': '
+					= @post.public ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+				.col-lg-3.col-md-3.col-sm-3
+					%label= t('post.comments_open')+': '
+					= @post.comments_open ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+				.col-lg-3.col-md-3.col-sm-3
+					%label= t('post.likes_enabled')+': '
+					= @post.likes_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+				.col-lg-3.col-md-3.col-sm-3
+					%label= t('post.shared_enabled')+': '
+					= @post.shared_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
 			%br/
-			%label= t('post.comments_open')+': '
-			= @post.comments_open ? "<i class='fa fa-check-circle'></i>".html_safe : "<i class='fa fa-minus-circle'></i>".html_safe
+			%label= t('post.tags')+': '
+			- @post.tag_list.each do |tag|
+				%span.label.label-info{style: 'font-size: 14px;'}= tag
 			%br/
-			%label= t('post.likes_enabled')+': '
-			= @post.likes_enabled ? "<i class='fa fa-check-circle'></i>".html_safe : "<i class='fa fa-minus-circle'></i>".html_safe
-			%br/
-			%label= t('post.shared_enabled')+': '
-			= @post.shared_enabled ? "<i class='fa fa-check-circle'></i>".html_safe : "<i class='fa fa-minus-circle'></i>".html_safe
 		.panel-footer
 			= link_to t('admin.actions.edit'), edit_post_path(@post), class: "btn btn-warning pull-right", style: "color:white"
 			.clearfix
