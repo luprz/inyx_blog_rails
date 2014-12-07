@@ -2,7 +2,9 @@ class CreateInyxBlogRailsPosts < ActiveRecord::Migration
   def change
     create_table :inyx_blog_rails_posts do |t|
       t.string :title
-      t.string :autor
+      t.integer :user_id
+      t.integer :category_id
+      t.integer :subcategory_id
       t.text :content
       t.string :image
       t.boolean :public

@@ -11,6 +11,12 @@
 			%label= t('post.autor')+': '
 			= @post.user.name
 			%br/
+			%label= t('post.category')+': '
+			= @post.category.name
+			%br/
+			%label= t('post.subcategory')+': '
+			= @post.subcategory.name
+			%br/
 			.panel.panel-warning{ style: 'margin:0px; margin-top:10px;'}
 				.panel-body
 					= raw @post.content

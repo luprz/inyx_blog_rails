@@ -1,7 +1,7 @@
-angular.module('post', [])
-  .controller('indexPostCtrl', ['$scope','posts', function($scope, posts) {
- 			posts.load();
- 			$scope.posts = posts;
+angular.module('category', [])
+  .controller('indexCategoryCtrl', ['$scope','categories', function($scope, categories) {
+ 			categories.load();
+ 			$scope.categories = categories;
 			$scope.interval_a = 0;
 			$scope.interval_b = 10;
 			$scope.page = 1;
@@ -14,11 +14,11 @@ angular.module('post', [])
 
 			// routes path
 			$scope.update_path = function (id) {
-			  return '/admin/posts/' + id;
+			  return '/admin/categories/' + id;
 			};
 
 			$scope.destroy_path = function (id) {
-			  return '/admin/posts/' + id;
+			  return '/admin/categories/' + id;
 			};
 			// --------------------
 
@@ -28,9 +28,9 @@ angular.module('post', [])
 
 			$scope.destroy = function() {	
 			 	if (confirm("¿Deseas eliminar los mensajes seleccionados?") == true) {
-				 	posts.destroy(ctrl.selected, $scope);
+				 	categories.destroy(ctrl.selected, $scope);
 				 	ctrl.pageInit($scope);
- 					$scope.posts = posts;
+ 					$scope.categories = categories;
 				}
 			};
 
@@ -39,17 +39,17 @@ angular.module('post', [])
 			};	
 
 			$scope.allSelected = function(){
-				ctrl.allItemsSelected($scope, $scope.posts);
+				ctrl.allItemsSelected($scope, $scope.categories);
 			};
 
 			$scope.refresh = function() {
-				posts.load();
-				$scope.posts = posts;				
+				categories.load();
+				$scope.categories = categories;				
 				ctrl.pageInit($scope);
 			};
 
 			$scope.nextList = function(){
-				ctrl.paginateControl($scope, $scope.posts.data.length, "next");
+				ctrl.paginateControl($scope, $scope.categories.data.length, "next");
 			}
 
 			$scope.lastList = function(){

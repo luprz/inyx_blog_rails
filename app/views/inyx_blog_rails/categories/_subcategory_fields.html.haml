@@ -1,0 +1,7 @@
+.nested-fields
+	.input-group
+		= f.input :name, label: false, input_html: { class: "form-control", placeholder: 'Nombre' }
+		%span.input-group-btn
+			= link_to_remove_association f, class: "btn btn-warning", style: "color:white;" do
+				%i.fa.fa-trash
+	%br/

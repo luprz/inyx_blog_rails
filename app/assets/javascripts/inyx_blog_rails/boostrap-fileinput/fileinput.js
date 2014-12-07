@@ -229,6 +229,7 @@
 
       // hidding input file and add filestyle
       _self.$element.css({
+        'width' : "0px",
         'position' : 'absolute',
         'clip' : 'rect(0px 0px 0px 0px)' // using 0px for work in IE8
       }).attr('tabindex', "-1").after(_self.$elementFilestyle);
@@ -292,7 +293,7 @@
 
   $.fn.filestyle.defaults = {
     'buttonText' : 'Buscar imagen',
-    'iconName' : 'fa fa-folder-open-o',
+    'iconName' : 'fa fa-photo',
     'buttonName' : 'btn-primary',
     'size' : 'nr',
     'input' : true,
