@@ -67,14 +67,13 @@ angular.module('post', [])
 
 		$scope.init = function(category_id, post_id, post, subcategories) {
 			object.get_subcategories(category_id)
-			object.get_post(post_id)
 			$scope.post = post;
 			$scope.subcategories = subcategories;
 			$scope.selected = selectSubcategory(post, subcategories)
 		}
 
 		$scope.selectAction = function() {
-		  object.get_subcategories($scope.obj.post.category_id);
+		  object.get_subcategories($scope.post.category_id);
 		  $scope.selected = "";
 
 		}

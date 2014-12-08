@@ -27,15 +27,6 @@ angular.module('post').factory('obj', [
   '$http', function($http) {
     var obj = {};
 
-    obj.get_post = function(id) {
-      $http.get('/admin/angular/posts/'+id+".json").success(function(data) {
-        console.log('Successfully post');
-        obj.post = data;
-      }).error(function() {
-        console.error('Failed to post.');
-      });
-    }
-
     obj.get_subcategories = function(id) {
       $http.get('/admin/angular/category/'+id+"/subcategories.json").success(function(data) {
         console.log('Successfully subcategories');
