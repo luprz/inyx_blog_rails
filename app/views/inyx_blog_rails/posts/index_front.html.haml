@@ -1,0 +1,13 @@
+.row{'ng-controller'=>'frontIndexCtrl', 'ng-init'=>"init(#{@posts.to_json})" }
+	.col-lg-3.col-md-3.col-sm-3.col-xs-12
+	.col-lg-9.col-md-9.col-sm-9.col-xs-12
+		.post{ "ng-repeat" => "post in posts | filter:buscar | interval:interval_a:interval_b "}
+			.preview-post.row
+				.col-lg-9.col-md-9.col-sm-9.col-xs-12
+					%h4.title-post
+						{{ post.title | uppercase }}
+					.image-post
+						%img{ "ng-src" => "{{post.image}}" }
+					.content-post{ "ng-bind-html" => "post.content"}
+
+				.col-lg-3.col-md-3.col-sm-3.col-xs-12

@@ -24,4 +24,9 @@ InyxBlogRails::Engine.routes.draw do
     end
   end
 
+  scope :blog do
+    get "/posts/:title", to: 'posts#show_front', as: "show_front_posts"
+    get "/posts", to: 'posts#index_front', as: "index_front_posts"
+  end
+
 end

@@ -1,4 +1,4 @@
-angular.module('post', [])
+angular.module('post', ['ngSanitize'])
   .controller('indexPostCtrl', ['$scope','posts', function($scope, posts) {
  			posts.load();
  			$scope.posts = posts;
@@ -74,6 +74,7 @@ angular.module('post', [])
 
 		$scope.selectAction = function() {
 		  object.get_subcategories($scope.post.category_id);
+		  console.log($scope.post.category_id)
 		  $scope.selected = "";
 
 		}
@@ -89,6 +90,16 @@ angular.module('post', [])
 
 		
   }])
+
+
+	.controller('frontIndexCtrl', ['$scope','obj', function($scope, object) {
+		$scope.Myhtml="<p>hola</p>"
+		$scope.init = function(posts) {			
+			$scope.posts = posts;
+		}
+		
+  }])
+
 
   
 

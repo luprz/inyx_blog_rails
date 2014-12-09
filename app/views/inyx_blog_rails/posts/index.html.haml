@@ -41,7 +41,7 @@
                 %input.check{:id => "check-{{post.id}}", "ng-click" => "selected(post.id); $event.stopPorpagation();", :type => "checkbox", "ng-model" => "post.checked"}
               %td.messages {{post.title}}
               %td.messages.hidden-xs {{ post.autor }}
-              %td.messages.hidden-xs {{ post.category }}
+              %td.messages.hidden-xs {{ post.category_name }}
               %td.messages.hidden-xs {{ post.public }}
               %td.messages
                 = link_to "/admin/blog/posts/{{post.id}}", title: t('admin.actions.show') do

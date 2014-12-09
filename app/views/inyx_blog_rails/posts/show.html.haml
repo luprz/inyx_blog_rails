@@ -6,7 +6,7 @@
 			= t('post.info')
 		.panel-body
 			%label= t('post.title')+': '
-			= @post.title
+			= @post.title.humanize
 			%br/
 			%label= t('post.autor')+': '
 			= @post.user.name
@@ -15,7 +15,7 @@
 			= @post.category.name
 			%br/
 			%label= t('post.subcategory')+': '
-			= @post.subcategory.name
+			= @post.subcategory.nil? ? "Sin subcategoría" : @post.subcategory.name
 			%br/
 			.panel.panel-warning{ style: 'margin:0px; margin-top:10px;'}
 				.panel-body

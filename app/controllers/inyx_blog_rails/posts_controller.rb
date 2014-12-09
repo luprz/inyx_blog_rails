@@ -3,8 +3,8 @@ require_dependency "inyx_blog_rails/application_controller"
 module InyxBlogRails
   class PostsController < ApplicationController
     before_action :set_post, only: [:show, :edit, :update, :destroy]
-    before_filter :authenticate_user!
-    layout 'admin/application'
+    before_filter :authenticate_user!, except: [:show_front, :index_front]
+    layout :resolve_layout
 
 
     # GET /posts
@@ -26,6 +26,14 @@ module InyxBlogRails
         format.html
         format.json { render :json => @post.category_form }
       end
+    end
+
+    def show_front
+      @post = Post.where(title: params[:title].gsub("-", " ")).first
+    end
+
+    def index_front
+      @posts = Post.all
     end
 
     # GET /posts/new
@@ -91,5 +99,15 @@ module InyxBlogRails
       def post_params
         params.require(:post).permit(:title, :content, :image, :public, :comments_open, :likes_enabled, :shared_enabled, :tag_list, :category_id, :subcategory_id)
       end
+
+      def resolve_layout
+        case action_name
+          when "show_front", "index_front"
+            "application"
+          else 
+            "admin/application"
+        end
+      end
+
   end
 end
