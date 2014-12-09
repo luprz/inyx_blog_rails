@@ -1,5 +1,5 @@
 require "inyx_blog_rails/engine"
 
 module InyxBlogRails
-	 SITEBAR = { 'posts'=> "/posts", 'categories' => "/categories" }
+	DROPDOWN = [{'blog' => ['<i class="fa fa-book"></i> Blog', 'posts', 'categories']}, { 'posts'=> "/blog/posts", 'categories' => "/posts/categories" }]
 end

@@ -19,6 +19,7 @@ Añadir la siguiente linea a su Gemfile
 ```ruby
 gem 'inyx_blog_rails', path: '../inyx_blog_rails'
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'cocoon'
 ```
 
 Ubicarse en la ruta del proyecto desde la terminal y ejecutar
@@ -39,18 +40,24 @@ añadir la siguiente linea a su manifesto javascript `application.js`
 //= require inyx_blog_rails/application
 ```
 
+añadir la siguiente linea a su manifesto javascript `application.css`
+
+```ruby
+*= require inyx_blog_rails/application
+```
+
 añadir la siguiente ruta a su archivo routes.rb
 
 ```ruby
-mount InyxblogRails::Engine, :at => '', as: 'post'
+mount InyxBlogRails::Engine, :at => '', as: 'post'
 ```
 
-Por ultimo ir al directorio `app/assets/javascript/` y abrir el archivo main.js y agregar 'post' a la suigiente linea de codigo codigo, ejemplo:
+Por ultimo ir al directorio `app/assets/javascript/` y abrir el archivo main.js y agregar 'post' y 'categoryPost' a la suigiente linea de codigo codigo, ejemplo:
 
 ```ruby
 angular.module('inyxmater', ['user']) #por defecto
 
-angular.module('inyxmater', ['user', 'post']) #debe quedar asi
+angular.module('inyxmater', ['user', 'post', 'categoryPost']) #debe quedar asi
 ```
 
 ## Configuración

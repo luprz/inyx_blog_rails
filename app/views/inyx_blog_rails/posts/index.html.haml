@@ -44,9 +44,9 @@
               %td.messages.hidden-xs {{ post.category }}
               %td.messages.hidden-xs {{ post.public }}
               %td.messages
-                = link_to "/admin/posts/{{post.id}}", title: t('admin.actions.show') do
+                = link_to "/admin/blog/posts/{{post.id}}", title: t('admin.actions.show') do
                   %i.fa.fa-exclamation-circle
-                = link_to "/admin/posts/{{post.id}}/edit", title: t('admin.actions.edit') do
+                = link_to "/admin/blog/posts/{{post.id}}/edit", title: t('admin.actions.edit') do
                   %i.fa.fa-edit
                 = link_to "{{destroy_path(post.id)}}", title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar este usuario?' } do
                   %i.fa.fa-trash-o
@@ -63,3 +63,6 @@
 
               
       .panel-footer
+        %center 
+          %strong= "#{@posts.count}"
+          Posts

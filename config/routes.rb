@@ -6,7 +6,7 @@ InyxBlogRails::Engine.routes.draw do
   end
 
 
-  scope :admin do
+  scope :admin, :blog do
   	resources :posts do
   		collection do
 	  		get '/angular_index', to: 'posts#angular_index'
@@ -15,7 +15,7 @@ InyxBlogRails::Engine.routes.draw do
   	end
   end
 
-  scope :admin do
+  scope :admin, :posts do
     resources :categories do
       collection do
         get '/angular_index', to: 'categories#angular_index'

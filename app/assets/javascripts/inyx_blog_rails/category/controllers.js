@@ -1,5 +1,5 @@
-angular.module('category', [])
-  .controller('indexCategoryCtrl', ['$scope','categories', function($scope, categories) {
+angular.module('categoryPost', [])
+  .controller('indexCategoryPostCtrl', ['$scope','categories', function($scope, categories) {
  			categories.load();
  			$scope.categories = categories;
 			$scope.interval_a = 0;
@@ -14,11 +14,11 @@ angular.module('category', [])
 
 			// routes path
 			$scope.update_path = function (id) {
-			  return '/admin/categories/' + id;
+			  return '/admin/posts/categories/' + id;
 			};
 
 			$scope.destroy_path = function (id) {
-			  return '/admin/categories/' + id;
+			  return '/admin/posts/categories/' + id;
 			};
 			// --------------------
 

@@ -1,8 +1,8 @@
-angular.module('category').factory('categories', [
+angular.module('categoryPost').factory('categories', [
   '$http', function($http) {
     var categories = {};
-    var route_index = '/admin/categories/angular_index.json'
-    var route_destroy = '/admin/categories/delete/'
+    var route_index = '/admin/posts/categories/angular_index.json'
+    var route_destroy = '/admin/posts/categories/delete/'
 
 
   categories.load = function() {

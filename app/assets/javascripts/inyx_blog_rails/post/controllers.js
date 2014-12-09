@@ -13,11 +13,11 @@ angular.module('post', [])
 
 			// routes path
 			$scope.update_path = function (id) {
-			  return '/admin/posts/' + id;
+			  return '/admin/blog/posts/' + id;
 			};
 
 			$scope.destroy_path = function (id) {
-			  return '/admin/posts/' + id;
+			  return '/admin/blog/posts/' + id;
 			};
 			// --------------------
 
@@ -69,7 +69,7 @@ angular.module('post', [])
 			object.get_subcategories(category_id)
 			$scope.post = post;
 			$scope.subcategories = subcategories;
-			$scope.selected = selectSubcategory(post, subcategories)
+			if(post) { $scope.selected = selectSubcategory(post, subcategories) }
 		}
 
 		$scope.selectAction = function() {

@@ -1,6 +1,6 @@
 = content_for(:title, "Admin - categories")
 
-%div{'ng-controller'=>'indexCategoryCtrl',  'ng-init'=>'init()', style:"padding:30px;padding-bottom:0px;"}
+%div{'ng-controller'=>'indexCategoryPostCtrl',  'ng-init'=>'init()', style:"padding:30px;padding-bottom:0px;"}
   .angular
     .form-inline
       .form-group
@@ -39,9 +39,9 @@
                 %input.check{:id => "check-{{category.id}}", "ng-click" => "selected(category.id); $event.stopPorpagation();", :type => "checkbox", "ng-model" => "category.checked"}
               %td.messages{style: "width:80%;"} {{category.name}}
               %td.messages
-                = link_to "/admin/categories/{{category.id}}", title: t('admin.actions.show') do
+                = link_to "/admin/posts/categories/{{category.id}}", title: t('admin.actions.show') do
                   %i.fa.fa-exclamation-circle
-                = link_to "/admin/categories/{{category.id}}/edit", title: t('admin.actions.edit') do
+                = link_to "/admin/posts/categories/{{category.id}}/edit", title: t('admin.actions.edit') do
                   %i.fa.fa-edit
                 = link_to "{{destroy_path(category.id)}}", title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => 'Si eliminas esta categoría se eliminaran todos los Posts adscritos a ella. ¿estás seguro de eliminar?' } do
                   %i.fa.fa-trash-o
@@ -55,6 +55,7 @@
                 - else
                   %center
                     No hay registros
-
-              
       .panel-footer
+        %center
+          %strong= "#{@categories.count}"
+          Categorías
