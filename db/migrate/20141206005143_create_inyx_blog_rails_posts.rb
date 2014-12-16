@@ -11,6 +11,7 @@ class CreateInyxBlogRailsPosts < ActiveRecord::Migration
       t.boolean :comments_open
       t.boolean :likes_enabled
       t.boolean :shared_enabled
+      t.string :permalink
 
       t.timestamps
     end
