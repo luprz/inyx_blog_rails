@@ -23,7 +23,7 @@ module InyxBlogRails
         category_permalink: self.category.permalink,
         subcategory_name: "#{self.subcategory.nil? ? nil : self.subcategory.name}",
         subcategory_id: self.subcategory_id,
-        subcategory_permalink: self.subcategory.permalink,
+        subcategory_permalink: "#{self.subcategory.permalink unless self.subcategory.nil?}",
         tags: self.tag_list.to_s,
   			content: self.content,
         content_truncate: self.content.truncate(1000),

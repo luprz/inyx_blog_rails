@@ -12,14 +12,6 @@ module InyxBlogRails
       @posts = Post.all
     end
 
-    def angular_index
-      posts = Post.all
-      respond_to do |format|
-        format.html
-        format.json { render :json => posts  }
-      end
-    end
-
     # GET /posts/1
     def show
       respond_to do |format|
@@ -96,21 +88,9 @@ module InyxBlogRails
       @post.destroy
       redirect_to posts_url, notice: 'El post ha sido eliminado satisfactoriamente.'
     end
-
-    def delete
-      Post.destroy( redefine_destroy params[:ids].split(",") )
-      respond_to do |format|
-        format.html { render nothing: true }
-      end
-    end
-
+ 
     private
-      #metodo para redefinir el array de los elementos selecionados que se van a eliminar
-      def redefine_destroy(params)
-        params.sort.each do |id|
-          params.delete id unless Post.exists? id
-        end
-      end
+
       # Use callbacks to share common setup or constraints between actions.
       def set_post
         @post = Post.find(params[:id])

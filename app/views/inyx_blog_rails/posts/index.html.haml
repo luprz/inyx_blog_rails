@@ -1,6 +1,6 @@
-= content_for(:title, "Admin - Posts")
+= content_for(:title, "Admin - objects")
 
-%div{'ng-controller'=>'indexPostCtrl',  'ng-init'=>'init()', style:"padding:30px;padding-bottom:0px;"}
+%div{'ng-controller'=>'indexObjectCtrl',  'ng-init'=>"init(#{@posts.to_json}, '/admin/blog/posts')", style:"padding:30px;padding-bottom:0px;"}
   .angular
     .form-inline
       .form-group
@@ -23,7 +23,7 @@
           %i.fa.fa-refresh#icon-refresh
         = link_to new_category_path, class: "btn btn-default", title: "Añadir categoría" do
           %i.fa.fa-tags
-        %a.btn.btn-default{"ng-show" => "posts.data.length", "ng-click" => "allSelected(posts)", :title => t("admin.buttons.select_all") }
+        %a.btn.btn-default{"ng-show" => "objects.length", "ng-click" => "allSelected(objects)", :title => t("admin.buttons.select_all") }
           %i.fa.fa-check-square-o
         %button#btn-delete.btn.btn-default{class: "btn-{{btnDelete}}", "ng-click" => "destroy()", :title => t("admin.buttons.trash") }
           %i.fa.fa-trash-o
@@ -36,21 +36,21 @@
       .panel-body
         %table{style: "width:100%"}
           %tbody
-            %tr{ class: "select-{{post.checked}}", "ng-click" => "show(post.id)", :id => "row-{{post.id}}", "ng-repeat" => "post in posts.data | filter:buscar | interval:interval_a:interval_b "}
+            %tr{ class: "select-{{object.checked}}", "ng-click" => "show(object.id)", :id => "row-{{object.id}}", "ng-repeat" => "object in objects | filter:buscar | interval:interval_a:interval_b "}
               %td.messages{width: "1px;"}
-                %input.check{:id => "check-{{post.id}}", "ng-click" => "selected(post.id); $event.stopPorpagation();", :type => "checkbox", "ng-model" => "post.checked"}
-              %td.messages {{post.title}}
-              %td.messages.hidden-xs {{ post.autor }}
-              %td.messages.hidden-xs {{ post.category_name }}
-              %td.messages.hidden-xs {{ post.public }}
+                %input.check{:id => "check-{{object.id}}", "ng-click" => "selected(object.id); $event.stopPorpagation();", :type => "checkbox", "ng-model" => "object.checked"}
+              %td.messages {{object.title}}
+              %td.messages.hidden-xs {{ object.autor }}
+              %td.messages.hidden-xs {{ object.category_name }}
+              %td.messages.hidden-xs {{ object.public }}
               %td.messages
-                = link_to "/admin/blog/posts/{{post.id}}", title: t('admin.actions.show') do
+                = link_to "{{show_path(object.id)}}", title: t('admin.actions.show') do
                   %i.fa.fa-exclamation-circle
-                = link_to "/admin/blog/posts/{{post.id}}/edit", title: t('admin.actions.edit') do
+                = link_to "{{edit_path(object.id)}}", title: t('admin.actions.edit') do
                   %i.fa.fa-edit
-                = link_to "{{destroy_path(post.id)}}", title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar este usuario?' } do
+                = link_to "{{destroy_path(object.id)}}", title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar este usuario?' } do
                   %i.fa.fa-trash-o
-            %tr{"ng-show" => "!posts.data.length"}
+            %tr{"ng-show" => "!objects.length"}
               %td{:style => "width:100%"}
                 - unless @posts.empty?
                   %center
@@ -64,5 +64,5 @@
               
       .panel-footer
         %center 
-          %strong= "#{@posts.count}"
+          %strong {{objects.length}}
           Posts
