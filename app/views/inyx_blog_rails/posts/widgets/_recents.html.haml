@@ -1,0 +1,9 @@
+.widget
+	%h4 RECIENTES
+	%ul{ "ng-repeat" => "post in posts | interval:0:4 "}
+		%li{ "ng-show" => "post.publicate == true"}
+			= link_to "/blog/posts/{{post.permalink}}" do
+				%i.fa.fa-sign-out
+				{{post.title}}
+			.datetime
+				%small {{post.datetime}}

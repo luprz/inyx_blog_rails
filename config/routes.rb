@@ -27,6 +27,10 @@ InyxBlogRails::Engine.routes.draw do
   scope :blog do
     get "/posts/:title", to: 'posts#show_front', as: "show_front_posts"
     get "/posts", to: 'posts#index_front', as: "index_front_posts"
+    get "/category/:category_permalink/posts", to: "posts#category_front", as: "index_category_posts"
+    get "/category/:category_permalink/subcategory/:subcategory_permalink/posts", to: "posts#subcategory_front", as: "index_subcategory_posts"
+    get "/tag/:permalink/posts", to: "posts#tag_front", as: "index_tag_posts"
+    get "/autor/:permalink/posts", to: "posts#autor_front", as: "index_autor_posts"
   end
 
 end

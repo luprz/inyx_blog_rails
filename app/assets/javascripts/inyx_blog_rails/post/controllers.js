@@ -85,7 +85,7 @@ angular.module('post', ['ngSanitize'])
 			   if(post.subcategory_id == subcategories[i].id) {
 			   		return i;
 			   }
-			}s
+			}
 		}
 
 		

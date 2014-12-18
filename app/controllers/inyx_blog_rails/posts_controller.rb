@@ -3,7 +3,7 @@ require_dependency "inyx_blog_rails/application_controller"
 module InyxBlogRails
   class PostsController < ApplicationController
     before_action :set_post, only: [:show, :edit, :update, :destroy]
-    before_filter :authenticate_user!, except: [:show_front, :index_front]
+    before_filter :authenticate_user!, except: [:show_front, :index_front, :category_front, :subcategory_front, :tag_front, :autor_front]
     layout :resolve_layout
 
 
@@ -34,6 +34,26 @@ module InyxBlogRails
 
     def index_front
       @posts = Post.order('created_at DESC').all
+    end
+
+    def category_front
+      @subcategories = Subcategory.where(category_id: Category.get_id(params[:category_permalink]))
+      @posts = Post.where(category_id: Category.get_id(params[:category_permalink])).order('created_at DESC').all
+    end
+
+    def subcategory_front
+      category = Category.find_by_permalink(params[:category_permalink])
+      subcategory = category.subcategories.find_by_permalink(params[:subcategory_permalink])
+      @subcategories = Subcategory.where(category_id: Category.get_id(params[:category_permalink]))
+      @posts = Post.where(subcategory_id: subcategory.id).order('created_at DESC').all
+    end
+
+    def tag_front
+      @posts = Post.tagged_with(params[:permalink].gsub("-", " ")).order('created_at DESC');
+    end
+
+    def autor_front
+      @posts = Post.where(user_id: params[:permalink]).order('created_at DESC').all
     end
 
     # GET /posts/new
@@ -103,7 +123,7 @@ module InyxBlogRails
 
       def resolve_layout
         case action_name
-          when "show_front", "index_front"
+          when "show_front", "index_front", "category_front", "subcategory_front", "tag_front", "autor_front"
             "application"
           else 
             "admin/application"

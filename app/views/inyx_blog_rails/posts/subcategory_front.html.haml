@@ -1,0 +1,16 @@
+.blog
+	.navbar-header
+	%button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-8", "data-toggle" => "collapse", :type => "button"}
+		%span.sr-only Toggle navigation
+		%span.icon-bar
+		%span.icon-bar
+		%span.icon-bar
+	#bs-example-navbar-collapse-8.collapse.navbar-collapse
+		%ul.nav.navbar-nav
+			- @subcategories.each do |subcategory|
+				%li{ class: "#{'active' if subcategory.permalink == params[:subcategory_permalink]}" }
+					= link_to subcategory.name, index_subcategory_posts_path(params[:category_permalink], subcategory.permalink)
+	.container
+		.row.blog{'ng-controller'=>'frontIndexCtrl', 'ng-init'=>"init(#{@posts.to_json})" }
+			= render "layouts/inyx_blog_rails/blog/sidebar_left"
+			= render "layouts/inyx_blog_rails/blog/posts_list"

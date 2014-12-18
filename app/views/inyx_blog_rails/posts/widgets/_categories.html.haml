@@ -1,0 +1,8 @@
+.widget
+	%h4 CATEGORÍAS
+	%ul.nav.nav-list.categories
+		- InyxBlogRails::Category.all.each do |category|
+			%li{ class: "#{'active' if category.permalink == params[:category_permalink]}" }
+				= link_to controller: "posts", action: "category_front", category_permalink: category.permalink do
+					%i.fa.fa-angle-right
+					= category.name			

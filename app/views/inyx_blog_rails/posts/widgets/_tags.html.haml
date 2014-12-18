@@ -1,0 +1,7 @@
+.widget
+	%h4 TAGS
+	.tags
+		- ActsAsTaggableOn::Tag.most_used(9).each do |tag|
+			= link_to index_tag_posts_path(tag.name.parameterize), class: "tag label label-default light #{'active' if action_name == "tag_front" and tag.name.humanize == params[:permalink].gsub("-", " ").humanize}" do
+				%i.fa.fa-tags
+				= tag
