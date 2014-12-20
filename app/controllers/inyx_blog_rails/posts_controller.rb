@@ -21,19 +21,23 @@ module InyxBlogRails
     end
 
     def show_front
+      @recents = Post.order("created_at DESC").limit(5)
       @post = Post.where(permalink: params[:title]).first
     end
 
     def index_front
+      @recents = Post.order("created_at DESC").limit(5)
       @posts = Post.order('created_at DESC').all
     end
 
     def category_front
+      @recents = Post.order("created_at DESC").limit(5)
       @subcategories = Subcategory.where(category_id: Category.get_id(params[:category_permalink]))
       @posts = Post.where(category_id: Category.get_id(params[:category_permalink])).order('created_at DESC').all
     end
 
     def subcategory_front
+      @recents = Post.order("created_at DESC").limit(5)
       category = Category.find_by_permalink(params[:category_permalink])
       subcategory = category.subcategories.find_by_permalink(params[:subcategory_permalink])
       @subcategories = Subcategory.where(category_id: Category.get_id(params[:category_permalink]))
@@ -41,10 +45,12 @@ module InyxBlogRails
     end
 
     def tag_front
+      @recents = Post.order("created_at DESC").limit(5)
       @posts = Post.tagged_with(params[:permalink].gsub("-", " ")).order('created_at DESC');
     end
 
     def autor_front
+      @recents = Post.order("created_at DESC").limit(5)
       @posts = Post.where(user_id: params[:permalink]).order('created_at DESC').all
     end
 

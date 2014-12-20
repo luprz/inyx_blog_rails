@@ -1,4 +1,4 @@
-angular.module('post', ['ngSanitize'])
+angular.module('post', ['ngSanitize', 'ui.bootstrap'])
 
 	.controller('formCategoryCtrl', ['$scope','obj', function($scope, object) {
 		$scope.obj = object;
@@ -31,9 +31,27 @@ angular.module('post', ['ngSanitize'])
   }])
 
 	.controller('frontIndexCtrl', ['$scope','obj', function($scope, object) {
+	  $scope.filteredposts = []
+	  ,$scope.currentPage = 1
+	  ,$scope.numPerPage = 1
+	  ,$scope.maxSize = 5;
+	  
 		$scope.init = function(posts) {			
 			$scope.posts = posts;
-		}		
+			$scope.totalItems = posts.length;
+		}
+
+		$scope.numPages = function () {
+	    return Math.ceil($scope.totalItems / $scope.numPerPage);
+	  }
+	  
+	  $scope.$watch('currentPage + numPerPage', function() {
+	    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+	    , end = begin + $scope.numPerPage;
+	    
+	    $scope.filteredposts = $scope.posts.slice(begin, end);
+	  })
+
   }])
 
 
