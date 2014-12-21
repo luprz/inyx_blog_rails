@@ -1,3 +1,4 @@
+= content_for(:title, "Blog - #{params[:category_permalink].humanize.gsub("-", " ")}")
 .blog
 	.navbar-header
 	%button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-8", "data-toggle" => "collapse", :type => "button"}

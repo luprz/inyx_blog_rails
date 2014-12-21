@@ -30,32 +30,19 @@ angular.module('post', ['ngSanitize', 'ui.bootstrap'])
 		
   }])
 
-	.controller('frontIndexCtrl', ['$scope','obj', function($scope, object) {
-	  $scope.filteredposts = []
-	  ,$scope.currentPage = 1
-	  ,$scope.numPerPage = 1
-	  ,$scope.maxSize = 5;
-	  
+	function frontIndexCtrl($scope, filterFilter) {
+
 		$scope.init = function(posts) {			
 			$scope.posts = posts;
-			$scope.totalItems = posts.length;
 		}
 
-		$scope.numPages = function () {
-	    return Math.ceil($scope.totalItems / $scope.numPerPage);
-	  }
-	  
-	  $scope.$watch('currentPage + numPerPage', function() {
-	    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-	    , end = begin + $scope.numPerPage;
-	    
-	    $scope.filteredposts = $scope.posts.slice(begin, end);
-	  })
+		$scope.currentPage = 1; //current page
+    $scope.maxSize = 5; //pagination max size
+    $scope.entryLimit = 6; //max rows for data table
+    
+    $scope.$watch('search', function(term) {
+	    $scope.filtered = filterFilter($scope.posts, term);
+	    $scope.noOfPages = Math.ceil($scope.filtered.length/$scope.entryLimit);
+    })
 
-  }])
-
-
-  
-
-  
-
+  }

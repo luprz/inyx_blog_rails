@@ -1,3 +1,4 @@
+= content_for(:title, "Blog - Posts")
 .container
 	.row.blog{'ng-controller'=>'frontIndexCtrl', 'ng-init'=>"init(#{@posts.to_json})" }
 		= render "layouts/inyx_blog_rails/blog/sidebar_left"

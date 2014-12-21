@@ -5,7 +5,7 @@
 				%h4.title-post
 					= link_to "{{ posts.title | uppercase }}", "/blog/posts/{{post.permalink}}"
 				.image-post
-					%img.thumbnail{ "ng-src" => "{{posts.image}}" }
+					%img.thumbnail{ "ng-src" => "{{posts.image}}", alt: "{{posts.title}}", title: "{{posts.title}}" }
 				.content-post{ "ng-bind-html" => "posts.content", style: "text-align:justify;"}
 				.row.socials{ "ng-if" => "posts.shared_enabled == true" }
 					.col-sm-12.col-md-12.col-sm-12.col-xs-12.socials-shared{ style: "margin-bottom: 15px;"}

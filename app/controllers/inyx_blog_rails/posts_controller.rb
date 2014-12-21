@@ -69,6 +69,7 @@ module InyxBlogRails
 
     # POST /posts
     def create
+      @categories = Category.all
       @post = Post.new(post_params)
       @post.user_id = current_user.id
 

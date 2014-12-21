@@ -1,6 +1,10 @@
 angular.module('post')
-	.filter('interval', function() {
-	  return function(arr, start, end) {
-	    return (arr || []).slice(start, end);
-	  };
+	.filter('startFrom', function() {
+    return function(input, start) {
+        if(input) {
+            start = +start; //parse to int
+            return input.slice(start);
+        }
+        return [];
+    }
 	});

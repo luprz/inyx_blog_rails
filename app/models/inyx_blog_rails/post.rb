@@ -8,7 +8,7 @@ module InyxBlogRails
     acts_as_taggable
     acts_as_taggable_on :tags
 
-    validates_presence_of :title, :content
+    validates_presence_of :title, :content, :category
     validates_uniqueness_of :title
 
   	def as_json(options={})
@@ -18,12 +18,12 @@ module InyxBlogRails
         image: self.image.url,
   			autor: self.user.name.humanize,
         autor_id: self.user.id,
-        category_name: self.category.name.humanize,
+        category_name: self.category.nil? ? nil : self.category.name.humanize,
         category_id: self.category_id,
-        category_permalink: self.category.permalink,
-        subcategory_name: "#{self.subcategory.nil? ? nil : self.subcategory.name}",
+        category_permalink: self.category.nil? ? nil : self.category.permalink,
+        subcategory_name: self.subcategory.nil? ? nil : self.subcategory.name,
         subcategory_id: self.subcategory_id,
-        subcategory_permalink: "#{self.subcategory.permalink unless self.subcategory.nil?}",
+        subcategory_permalink: self.subcategory.nil? ? nil : self.subcategory.permalink,
         tags: self.tag_list.to_s,
   			content: self.content,
         content_truncate: self.content.truncate(1000),
@@ -32,11 +32,11 @@ module InyxBlogRails
         comments_open: self.comments_open,
         likes_enabled: self.likes_enabled,
         shared_enabled: self.shared_enabled,
-        datetime: self.created_at.strftime("%d %b. %Y / %H:%M"),
-  			created_at: self.created_at.strftime("%b. %Y"),
-        day: self.created_at.day,
-  			updated_at: self.updated_at,
-        category: Category.find(self.category_id),
+        datetime: self.created_at? ? self.created_at.strftime("%d %b. %Y / %H:%M") : nil,
+  			created_at: self.created_at? ? self.created_at.strftime("%b. %Y") : nil,
+        day: self.created_at? ? self.created_at.day : nil,
+  			updated_at: self.updated_at? ? self.updated_at : nil,
+        category: self.category_id.blank? ? nil : Category.find(self.category_id),
         subcategory: self.subcategory.nil? ? nil : Subcategory.find(self.subcategory_id),
         permalink: self.permalink
   		}
