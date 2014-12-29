@@ -13,5 +13,5 @@
         .links
           = link_to_add_association 'añadir subcategoría', f, :subcategories, class: "btn btn-default btn-sm pull-right"
     .panel-footer
-      = f.submit params[:action] == 'new' ? t('helpers.submit.create') : t('helpers.submit.update'), class: "btn btn-warning pull-right"
+      = f.submit 'Guardar', class: "btn btn-warning pull-right"
       .clearfix
