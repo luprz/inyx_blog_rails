@@ -6,12 +6,6 @@ module InyxBlogRails
     before_filter :authenticate_user!, except: [:show_front, :index_front, :category_front, :subcategory_front, :tag_front, :autor_front]
     layout :resolve_layout
 
-
-    # GET /posts
-    def index
-      @posts = Post.all
-    end
-
     # GET /posts/1
     def show
       respond_to do |format|
@@ -84,6 +78,7 @@ module InyxBlogRails
     # PATCH/PUT /posts/1
     def update
       if @post.update(post_params)
+        @post.__elasticsearch__.index_document
         redirect_to @post, notice: 'El post ha sido actualizado satisfactoriamente.'
       else
         render :edit

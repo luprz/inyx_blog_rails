@@ -1,68 +1,98 @@
 = content_for(:title, "Admin - Posts")
 
-%div{'ng-controller'=>'indexObjectCtrl',  'ng-init'=>"init(#{@posts.to_json}, '/admin/blog/posts')", style:"padding:30px;padding-bottom:0px;"}
-  .angular
-    .form-inline
-      .form-group
-        .input-group
-          .input-group-addon
-            %i.fa.fa-search
-          %input#input-search{"ng-model" => "buscar.$", :placeholder => t("admin.actions.search"), :type => "text"} 
-    .alert{class: 'alert-{{statusAlert}}', 'ng-show'=>"alert==true"} 
-      %strong Admin:    
-      {{msnAlert}}
-      %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
-    = render 'layouts/admin/messages'
+%div{'ng-init'=>"init(#{@objects.to_json}, '/admin/blog/posts', '#{params[:search]}', #{@total_rows}, #{Kaminari.config.default_per_page})", "resize" => ""}
+  .grid-content
+    .col-lg-8.col-md-8{ style: "padding:0px;" } 
+      .list-wrapper
+        .panel.panel-default
+          .panel-heading#list-heading{ style: "width:67%;"}
+            = link_to new_post_path, class: "btn btn-default btn-action", title: t("admin.buttons.new") do
+              %i.fa.fa-plus-circle
+            = link_to new_category_path, class: "btn btn-default btn-action", title: "Añadir categoría" do
+              %i.fa.fa-tags
+            %a.btn.btn-default.btn-action{"ng-click" => "refresh()", "ng-disabled" => "pagesItemsSelected[currentPageServer].length != 0", :title => t("admin.buttons.refresh") }
+              %i.fa.fa-refresh#icon-refresh{'ng-show'=>"!loadingRefresh"}
+              %i.fa.fa-refresh.fa-spin{'ng-show'=>"loadingRefresh"}
+            %a.btn.btn-default.btn-action{"ng-show" => "objects.length", "ng-click" => "allSelected(objects)", :title => t("admin.buttons.select_all") }
+              %i.fa.fa-square-o{"ng-show" => "!btnDelete"}
+              %i.fa.fa-check-square-o{ "ng-show" => "btnDelete" } 
+            %a.btn.btn-default.btn-action#btn-delete{ "ng-show" => "btnDelete", "ng-click" => "destroy()", :title => t("admin.buttons.trash") }
+              %i.fa.fa-circle-o-notch.fa-spin{ 'ng-show' => "loadingDelete" }
+              %i.fa.fa-trash-o{ 'ng-show' => "!loadingDelete" }
+            .paginator.pull-right{ "ng-show" => "objects.length > 0"}
+              %button.btn.btn-default.pull-right.hidden-xs{'disabled'=>"", style:"color:#000; margin-left:3px;"}
+                Página {{currentPage+1}} de {{numberOfPages()}}
+              %a.btn.btn-default.pull-right.next{ "ng-disabled"=>"currentPage >= total_objects/pageSize - 1 || loadingNext", "ng-click"=>"next()", style: "margin-left:3px" }
+                %i.fa.fa-circle-o-notch.fa-spin{ 'ng-show' => "loadingNext" }
+                %i.fa.fa-arrow-right{ 'ng-show' => "!loadingNext" }
+              %a.btn.btn-default.pull-right.last{'ng-disabled'=>"currentPage == 0 || loadingLast", "ng-click"=>"last()"}
+                %i.fa.fa-circle-o-notch.fa-spin{ 'ng-show' => "loadingLast" }
+                %i.fa.fa-arrow-left{ 'ng-show' => "!loadingLast" }
+          .panel-body{ style: "border-right: 1px solid #e7e7e7;" }
+            #table-scroll
+              %table.grid{style: "width:100%"}
+                %tbody
+                  %tr{ class: "select-{{object.checked}}", "ng-click" => "show_object(object)", :id => "row-{{object.id}}", "ng-repeat" => "object in objects | startFrom:currentPage*pageSize | limitTo:pageSize" }
+                    %td{ width: "1px;" }
+                      .checkboxFour
+                        %input.checkboxFourInput{:id => "check-{{object.id}}", :type => "checkbox", "ng-model" => "object.checked", "ng-click" => "selected(object); $event.stopPorpagation();" }
+                        %label{ for: "check-{{object.id}}" }
+                          %span
+                    %td {{ object.title_truncate }}
+                    %td {{ object.autor }}
+                    %td {{ object.category_name }}
+                    %td {{ object.public }}
 
-    %br/
-    .panel.panel-default
-      .panel-heading
-        = link_to new_post_path, class: "btn btn-default", title: t("admin.buttons.new") do
-          %i.fa.fa-plus-circle
-        %button.btn.btn-default{"ng-click" => "refresh()", :title => t("admin.buttons.refresh") }
-          %i.fa.fa-refresh#icon-refresh
-        = link_to new_category_path, class: "btn btn-default", title: "Añadir categoría" do
-          %i.fa.fa-tags
-        %a.btn.btn-default{"ng-show" => "objects.length", "ng-click" => "allSelected(objects)", :title => t("admin.buttons.select_all") }
-          %i.fa.fa-check-square-o
-        %button#btn-delete.btn.btn-default{class: "btn-{{btnDelete}}", "ng-click" => "destroy()", :title => t("admin.buttons.trash") }
-          %i.fa.fa-trash-o
-        %button.btn.btn-default.pull-right.hidden-xs{'disabled'=>"", style:"color:#000"}
-          Página {{page}}
-        %button.btn.btn-default.pull-right{"ng-click" => "nextList();"}
-          %i.fa.fa-arrow-right
-        %button.btn.btn-default.pull-right{"ng-click" => "lastList();"}
-          %i.fa.fa-arrow-left
-      .panel-body
-        %table{style: "width:100%"}
-          %tbody
-            %tr{ class: "select-{{object.checked}}", "ng-click" => "show(object.id)", :id => "row-{{object.id}}", "ng-repeat" => "object in objects | filter:buscar | interval:interval_a:interval_b "}
-              %td.messages{width: "1px;"}
-                %input.check{:id => "check-{{object.id}}", "ng-click" => "selected(object.id); $event.stopPorpagation();", :type => "checkbox", "ng-model" => "object.checked"}
-              %td.messages {{object.title}}
-              %td.messages.hidden-xs {{ object.autor }}
-              %td.messages.hidden-xs {{ object.category_name }}
-              %td.messages.hidden-xs {{ object.public }}
-              %td.messages
-                = link_to "{{show_path(object.id)}}", title: t('admin.actions.show') do
-                  %i.fa.fa-exclamation-circle
-                = link_to "{{edit_path(object.id)}}", title: t('admin.actions.edit') do
-                  %i.fa.fa-edit
-                = link_to "{{destroy_path(object.id)}}", title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar este usuario?' } do
-                  %i.fa.fa-trash-o
-            %tr{"ng-show" => "!objects.length"}
-              %td{:style => "width:100%"}
-                - unless @posts.empty?
-                  %center
-                    %i.fa.fa-spinner.fa-spin{ style: "font-size:30px; margin-bottom:10px;"}
-                    %br/
-                    Cargando
-                - else
-                  %center
-                    No hay registros
 
-              
-      .panel-footer
-        %center 
-          %strong {{objects.length}}
-          Posts
+  .col-lg-4.col-md-4{ style: "padding:0px;"}
+    .show-wrapper
+      .show-head
+      .show-body{ style: "position: fixed; width:33.3%;"}
+        .panel.panel-default
+          .panel-heading{ style: "height:55px;" }
+            .actions{ "ng-show" => "object_data" }
+              .title.pull-left{ style: "margin-top:6px;" }
+                %i.fa.fa-pencil
+                Post - {{ object_data.id }}
+              = link_to "{{destroy_path(object_data.id)}}", title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar este post?' }, class: "btn btn-default btn-action pull-right", "ng-show" => "object_data" do
+                %i.fa.fa-remove
+              = link_to "{{edit_path(object_data.id)}}", title: t('admin.actions.edit'), class: "btn btn-default btn-action pull-right", "ng-show" => "object_data", style: "margin-right:3px;" do
+                %i.fa.fa-pencil
+            .no-actions{ "ng-show" => "!object_data", style: "margin-top:6px;" }
+              %i.fa.fa-pencil
+              Post
+          .panel-body
+            .data{ "ng-show" => "object_data", style: "height: {{windowHeight-104}}px;" }
+              %img{ "ng-show" => "object_data.image", "ng-src" => "{{object_data.image}}", alt: "{{posts.title}}", title: "{{posts.title}}" }
+              .attributes
+                %label Título: 
+                {{object_data.title}}
+                %br/
+                %label Autor: 
+                {{object_data.autor | titlecase }}
+                %br/
+                %label Categoría: 
+                {{object_data.category_name}}
+                %br/
+                %label Subcategoría: 
+                {{object_data.subcategory_name}}
+                %br/
+                %label ¿Publicado?:
+                {{object_data.public}}
+                %br/
+                %label Permalink:
+                {{object_data.permalink}}
+                %br/
+                %label Creado:
+                {{object_data.created_at | date : format : timezone}}
+                %br/
+                %label Modificado:
+                {{object_data.updated_at | date : format : timezone}}
+                %br/
+                %label Contenido:
+                .show-content-post{ "ng-bind-html" => "object_data.content", style: "text-align:justify;"}
+                %br/
+            .no-data{ "ng-show" => "!object_data"}
+              %center
+                No se ha seleccionado un post para mostrar.
+      .show-footer

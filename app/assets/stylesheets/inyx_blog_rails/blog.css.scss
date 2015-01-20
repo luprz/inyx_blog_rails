@@ -134,3 +134,22 @@
 	} 
 	
 }
+
+.attributes {
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+
+	span {
+		line-height: 2px
+	}
+}
+
+.show-content-post {
+	border: 1px solid #a3a3a3;
+	padding: 10px;
+	
+	p {
+		margin: 0px;
+	}
+}

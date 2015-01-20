@@ -1,5 +1,8 @@
 module InyxBlogRails
+  require 'elasticsearch/model'
   class Post < ActiveRecord::Base
+    include Elasticsearch::Model
+    include Elasticsearch::Model::Callbacks
     before_save :create_permalink
     mount_uploader :image, ImageUploader
     belongs_to :user
@@ -15,8 +18,9 @@ module InyxBlogRails
   		{
   			id: self.id,
   			title: self.title,
+        title_truncate: self.title.truncate(50),
         image: self.image.url,
-  			autor: self.user.name.humanize,
+  			autor: self.user.name,
         autor_id: self.user.id,
         category_name: self.category.nil? ? nil : self.category.name.humanize,
         category_id: self.category_id,
@@ -45,6 +49,12 @@ module InyxBlogRails
     def create_permalink
       self.permalink = self.title.downcase.parameterize
     end
+
+    def self.query(query)
+      { query: { multi_match:  { query: query, fields: [:title, :category_name, :public, :content, :autor, :subcategory_name] }  }, sort: { id: "desc" }, size: 10 }
+    end
     
   end
+
+  Post.import
 end
