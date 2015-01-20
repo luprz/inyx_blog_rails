@@ -9,7 +9,6 @@ InyxBlogRails::Engine.routes.draw do
   scope :admin, :blog do
   	resources :posts do
   		collection do
-	  		get '/angular_index', to: 'posts#angular_index'
 	  		post '/delete', to: 'posts#delete'
 	  	end
   	end
@@ -18,7 +17,6 @@ InyxBlogRails::Engine.routes.draw do
   scope :admin, :posts do
     resources :categories do
       collection do
-        get '/angular_index', to: 'categories#angular_index'
         post '/delete', to: 'categories#delete'
       end
     end
