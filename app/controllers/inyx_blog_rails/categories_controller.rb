@@ -6,11 +6,6 @@ module InyxBlogRails
     before_filter :authenticate_user!
     layout 'admin/application'
 
-    # GET /categories
-    def index
-      @categories = Category.all
-    end
-
     # GET /categories/1
     def show
     end

@@ -6,7 +6,16 @@ module InyxBlogRails
   	has_many :subcategories
   	accepts_nested_attributes_for :subcategories, :reject_if => :all_blank, :allow_destroy => true
 
-  	def self.get_id(permalink)
+  	 
+     def as_json(options={})
+      {
+        id: self.id,
+        name: self.name,
+        subcategories: self.subcategories.map { |sub| sub.name }.join(", ")
+      }
+    end
+
+    def self.get_id(permalink)
 	  	Category.find_by_permalink(permalink).id
 	  end
 
