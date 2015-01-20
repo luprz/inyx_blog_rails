@@ -57,7 +57,7 @@ Por ultimo ir al directorio `app/assets/javascript/` y abrir el archivo main.js 
 ```ruby
 angular.module('inyxmater', ['user']) #por defecto
 
-angular.module('inyxmater', ['user', 'post', 'categoryPost']) #debe quedar asi
+angular.module('inyxmater', ['user', 'post']) #debe quedar asi
 ```
 
 ## Configuración
