@@ -51,7 +51,7 @@ module InyxBlogRails
     end
 
     def self.query(query)
-      { query: { multi_match:  { query: query, fields: [:title, :category_name, :public, :content, :autor, :subcategory_name] }  }, sort: { id: "desc" }, size: 10 }
+      { query: { multi_match:  { query: query, fields: [:title, :category_name, :public, :content, :autor, :subcategory_name, :tags] }  }, sort: { id: "desc" }, size: 10 }
     end
     
   end

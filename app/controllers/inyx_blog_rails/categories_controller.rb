@@ -33,6 +33,7 @@ module InyxBlogRails
     # PATCH/PUT /categories/1
     def update
       if @category.update(category_params)
+        @category.__elasticsearch__.index_document
         redirect_to @category, notice: 'La categoría ha sido actualizada satisfactoriamente.'
       else
         render :edit
