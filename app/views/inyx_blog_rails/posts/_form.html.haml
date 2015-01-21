@@ -1,44 +1,41 @@
-
 = simple_form_for(@post) do |f|
-	.panel.panel-default
-		.panel-heading
-			%i.fa.fa-th-list
-			= t('post.info')
-		.panel-body
-			.form-inputs
-				= f.input :title, label: false, input_html: { class: "form-control", placeholder: 'title' }
-				%br/
-				= f.input :content, label: false, input_html: { class: "tinymce", style: "height: 200px;" }
-				%br/
-				%div{ "ng-controller" => "formCategoryCtrl", 'ng-init'=> "#{params[:action] == 'new' ? 'init()' : "init(#{@post.category_id}, #{@post.id}, #{@post.to_json}, #{@subcategories.to_json})"}" }
-					= f.association :category, label: false, collection: @categories, include_blank: "- Seleccionar categoría -", input_html: { class: "form-control", "ng-click" => "selectAction()", "ng-model" => "post.category_id" }
-					%br/
-					%select{:name => "post[subcategory_id]", class: "form-control", id: "post_subcategory_id", "ng-model"=>"obj.subcategories[selected]", "ng-if" => "obj.subcategories", "ng-options" => "subcategory.name for subcategory in obj.subcategories track by subcategory.id" }
-						%option{ value: "" } - Selecionar subcategoría -
+	.container_form	
+		.title_form
+			Datos de usuario
+		.form-p
+			.input#title{ class: "#{@post.title.blank? ? 'input-false' : 'input-great' }" }
+				= f.input :title, label: 'Título', input_html: { class: "input_form", id: "input-title", "ng-focus" => "inputFocus('title')", "ng-blur" => "inputBlur('title')" }
+			= f.input :content, label: false, input_html: { class: "tinymce", style: "height: 200px;" }
+			
+			%div{ "ng-controller" => "formCategoryCtrl", 'ng-init'=> "#{params[:action] == 'new' ? 'init()' : "init(#{@post.category_id}, #{@post.id}, #{@post.to_json}, #{@subcategories.to_json})"}" }
+				.input#category{ class: "#{@post.title.blank? ? 'input-false' : 'input-great' }" }
+					= f.association :category, label: "Categoría", collection: @categories, input_html: { class: "input_form", "ng-click" => "selectAction()", "ng-model" => "post.category_id", id: "input-category", "ng-focus" => "inputFocus('category')", "ng-blur" => "inputBlur('category')" }
 						
-				%br/
-				- unless @post.image.blank?
-					= image_tag @post.image, class: "thumbnail", style: "width:200px;"
-					%center
-						= f.input :image, label: false, as: :file, input_html: { class: "form-control filestyle", placeholder: 'image', "data-buttonBefore" => false, "data-input" => false, "data-buttonText" => params[:action] == "new" ? "Subir imágen" : "Cambiar imágen" }
-				- else 
-					= f.input :image, label: false, as: :file, input_html: { class: "form-control filestyle", placeholder: 'image', "data-buttonBefore" => false, "data-input" => false, "data-buttonText" => params[:action] == "new" ? "Subir imágen" : "Cambiar imágen" }
-				%br/
-				= f.input :tag_list, label: false, input_html: { class: "form-control tagsinput", placeholder: 'tags', "data-role"=>"tagsinput" }
-				%br/
-				.row
-					.col-lg-3.col-md-3.col-sm-3
-						%center
-							= f.input :public, input_html: { style: "margin:0px;", class: 'checkstyle' }
-					.col-lg-3.col-md-3.col-sm-3
-						%center
-							= f.input :comments_open, input_html: { style: "margin:0px;", class: 'checkstyle' }
-					.col-lg-3.col-md-3.col-sm-3
-						%center
-							= f.input :likes_enabled, input_html: { style: "margin:0px;", class: 'checkstyle'}
-					.col-lg-3.col-md-3.col-sm-3
-						%center
-							= f.input :shared_enabled, input_html: { style: "margin:0px;", class: 'checkstyle'}
+				.input#post_subcategory_id{ "ng-if" => "obj.subcategories", class: "#{@post.title.blank? ? 'input-false' : 'input-great' }" }
+					.control-group.select
+						%label.select.control-label{ for: "input-post_subcategory_id"} Subcategoría
+					%select{:name => "post[subcategory_id]", class: "input_form", id: "input-post_subcategory_id", "ng-model"=>"obj.subcategories[selected]", "ng-if" => "obj.subcategories", "ng-options" => "subcategory.name for subcategory in obj.subcategories track by subcategory.id", "ng-focus" => "inputFocus('post_subcategory_id')", "ng-blur" => "inputBlur('post_subcategory_id')" }
+						%option{ value: "" }
+					
+			%br/
+			- unless @post.image.blank?
+				= image_tag @post.image, class: "thumbnail", style: "width:200px;"
+				%center
+					= f.input :image, label: false, as: :file, input_html: { class: "form-control", placeholder: 'image', "data-buttonBefore" => false, "data-input" => false, "data-buttonText" => params[:action] == "new" ? "Subir imágen" : "Cambiar imágen" }
+			- else 
+				= f.input :image, label: false, as: :file, input_html: { class: "form-control", placeholder: 'image', "data-buttonBefore" => false, "data-input" => false, "data-buttonText" => params[:action] == "new" ? "Subir imágen" : "Cambiar imágen" }
+			%br/
+			= f.input :tag_list, label: false, input_html: { class: "form-control tagsinput", placeholder: 'tags', "data-role"=>"tagsinput" }
+			%br/
+			.row{ style: 'margin-bottom: 50px;'}
+				.col-lg-3.col-md-3.col-sm-3
+					= f.input :public, input_html: { style: "margin:0px;" }
+				.col-lg-3.col-md-3.col-sm-3
+					= f.input :comments_open, input_html: { style: "margin:0px;", class: 'checkstyle' }
+				.col-lg-3.col-md-3.col-sm-3
+					= f.input :likes_enabled, input_html: { style: "margin:0px;", class: 'checkstyle'}
+				.col-lg-3.col-md-3.col-sm-3
+					= f.input :shared_enabled, input_html: { style: "margin:0px;", class: 'checkstyle'}
 		.panel-footer
 			= f.submit "Guardar", class: "btn btn-warning pull-right"
 			.clearfix

@@ -7,6 +7,7 @@ angular.module('post').factory('obj', [
         console.log('Successfully subcategories');
         obj.subcategories = data;
       }).error(function() {
+        obj.subcategories = null;
         console.error('Failed to subcategories.');
       });
     }
