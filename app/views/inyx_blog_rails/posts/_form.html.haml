@@ -18,29 +18,24 @@
 						%option{ value: "" }
 					
 			%br/
-			- unless @post.image.blank?
-				= image_tag @post.image, class: "thumbnail", style: "width:200px;"
-				%center
-					= f.input :image, label: false, as: :file, input_html: { class: "form-control", placeholder: 'image', "data-buttonBefore" => false, "data-input" => false, "data-buttonText" => params[:action] == "new" ? "Subir imágen" : "Cambiar imágen" }
-			- else 
-				= f.input :image, label: false, as: :file, input_html: { class: "form-control", placeholder: 'image', "data-buttonBefore" => false, "data-input" => false, "data-buttonText" => params[:action] == "new" ? "Subir imágen" : "Cambiar imágen" }
+			= f.input :image, label: false, as: :file, input_html: { class: "form-control file", placeholder: 'image', "data-buttonBefore" => false, "data-input" => false, "data-buttonText" => params[:action] == "new" ? "Subir imágen" : "Cambiar imágen", id: "input-20" }
 			%br/
-			= f.input :tag_list, label: false, input_html: { class: "form-control tagsinput", placeholder: 'tags', "data-role"=>"tagsinput" }
+			= f.input :tag_list, label: false, input_html: { class: "form-control tagsinput", placeholder: 'Tags', "data-role"=>"tagsinput" }
 			%br/
 			.row{ style: 'margin-bottom: 50px;'}
 				.col-lg-3.col-md-3.col-sm-3
 					%center
-						= f.input :public, input_html: { style: "margin:0px;", class: 'checkstyle' }
+						= f.input :public, label: "¿Publicar?", input_html: { style: "margin:0px;", class: 'checkstyle' }
 				.col-lg-3.col-md-3.col-sm-3
 					%center
-						= f.input :comments_open, input_html: { style: "margin:0px;", class: 'checkstyle' }
+						= f.input :comments_open, label: "¿Abrir comentarios?", input_html: { style: "margin:0px;", class: 'checkstyle' }
 				.col-lg-3.col-md-3.col-sm-3
 					%center
-						= f.input :likes_enabled, input_html: { style: "margin:0px;", class: 'checkstyle'}
+						= f.input :likes_enabled, label: "¿Permitir dar me gusta?", input_html: { style: "margin:0px;", class: 'checkstyle'}
 				.col-lg-3.col-md-3.col-sm-3
 					%center
-						= f.input :shared_enabled, input_html: { style: "margin:0px;", class: 'checkstyle'}
-		.panel-footer
+						= f.input :shared_enabled, label: "¿Permitir compartir?", input_html: { style: "margin:0px;", class: 'checkstyle'}
+		.panel-footer{ style: "margin-bottom: 10px;"}
 			= f.submit "Guardar", class: "btn btn-warning pull-right"
 			.clearfix
 
@@ -58,20 +53,30 @@
 		size: 'mini'
 	});
 
-	$('.filestyle').each(function() {
-		var $this = $(this), options = {
-			'input' : $this.attr('data-input') === 'false' ? false : true,
-			'icon' : $this.attr('data-icon') === 'false' ? false : true,
-			'buttonBefore' : $this.attr('data-buttonBefore') === 'true' ? true : false,
-			'disabled' : $this.attr('data-disabled') === 'true' ? true : false,
-			'size' : $this.attr('data-size'),
-			'buttonText' : $this.attr('data-buttonText'),
-			'buttonName' : $this.attr('data-buttonName'),
-			'iconName' : $this.attr('data-iconName'),
-			'badge' : $this.attr('data-badge') === 'false' ? false : true
-		};
-		$this.filestyle(options);
-	});
+- if @post.image.blank?
+	:javascript
+		$("#input-20").fileinput({
+			browseClass: "btn btn-primary btn-block",
+			showCaption: false,
+			showRemove: false,
+			showUpload: false,
+			browseIcon: '<i class="fa fa-folder-open"></i>',
+			browseLabel: ' Subir imágen',
+		});
+- else 
+	:javascript
+		$("#input-20").fileinput({
+			browseClass: "btn btn-primary btn-block",
+			showCaption: true,
+			captionIcon: '<i class="fa fa-folder-open"></i>',
+			showRemove: false,
+			showUpload: false,
+			browseIcon: '<i class="fa fa-folder-open"></i>',
+			browseLabel: ' Subir imágen',
+			initialPreview: ['"#{image_tag @post.image, class: 'file-preview-image' if !@post.image.blank?}"'],
+			initialCaption: " #{@post.image.file.filename.humanize}"
+		});
+		
 
 
 
