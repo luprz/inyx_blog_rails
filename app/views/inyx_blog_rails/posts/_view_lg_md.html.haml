@@ -88,7 +88,7 @@
                 {{object_data.updated_at | date : format : timezone}}
                 %br/
                 %label Contenido:
-                .show-content-post{ "ng-bind-html" => "object_data.content", style: "text-align:justify;"}
+                .panel.panel-warning{"ng-bind-html" => "object_data.content", style: 'margin-top:10px; padding: 10px; border-color: #4758d3; border-radius:0px; text-align:justify;' }
                 %br/
               .no-data{ "ng-show" => "!object_data"}
                 %center

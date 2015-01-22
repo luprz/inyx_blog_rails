@@ -12,6 +12,12 @@
 				= link_to edit_post_path(@post), title: t('admin.actions.edit'), class: "btn btn-default btn-action pull-right", style: "margin-right:3px;" do
 					%i.fa.fa-pencil		
 		
+		- unless @post.image.blank?
+			= image_tag @post.image, style: "width:100%", class: "hidden-lg hidden-md"
+			= image_tag @post.image, style: "width:50%; margin-top:10px; margin-bottom:0px;", class: "thumbnail hidden-xs hidden-sm"
+		- else
+			%center{ style: "margin-top: 10px;" }
+				%p{ style: "margin-bottom:0px;"} Sin imagen
 		.panel-body#body-show
 			%label= t('post.title')+': '
 			= @post.title.humanize
@@ -28,33 +34,22 @@
 			%label= t('post.permalink')+': '
 			= @post.permalink
 			%br/
-			.panel.panel-warning{ style: 'margin-top:10px; padding: 10px;'}
+			.panel.panel-warning{ style: 'margin-top:10px; padding: 10px; border-color: #4758d3; border-radius:0px;'}
 				.panel-body
 					= raw @post.content
-			%br/
-			%label= t('post.image')+': '
-			- unless @post.image.blank?
-				= image_tag @post.image, class: "thumbnail"
-			- else
-				Sin imágen
-			%br/
 			.row{ style: 'margin: 0px; margin-top:10px;'}
 				.col-lg-3.col-md-3.col-sm-3
-					%center
-						%label= t('post.public')+': '
-						= @post.public ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+					%label= t('post.public')+': '
+					= @post.public ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
 				.col-lg-3.col-md-3.col-sm-3
-					%center
-						%label= t('post.comments_open')+': '
-						= @post.comments_open ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+					%label= t('post.comments_open')+': '
+					= @post.comments_open ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+				.col-lg-3.col-md-3.col-sm-3	
+					%label= t('post.likes_enabled')+': '
+					= @post.likes_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
 				.col-lg-3.col-md-3.col-sm-3
-					%center
-						%label= t('post.likes_enabled')+': '
-						= @post.likes_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
-				.col-lg-3.col-md-3.col-sm-3
-					%center
-						%label= t('post.shared_enabled')+': '
-						= @post.shared_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+					%label= t('post.shared_enabled')+': '
+					= @post.shared_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
 			%br/
 			%label= t('post.tags')+': '
 			- @post.tag_list.each do |tag|

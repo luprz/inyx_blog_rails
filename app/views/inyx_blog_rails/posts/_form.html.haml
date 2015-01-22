@@ -22,17 +22,17 @@
 			%br/
 			= f.input :tag_list, label: false, input_html: { class: "form-control tagsinput", placeholder: 'Tags', "data-role"=>"tagsinput" }
 			%br/
-			.row{ style: 'margin-bottom: 50px;'}
-				.col-lg-3.col-md-3.col-sm-3
+			.row#attributes-config-blog{ style: 'margin-bottom: 10px;'}
+				.col-lg-3.col-md-3.col-sm-3.col-xs-6{ style: "margin-bottom: 20px;"}
 					%center
 						= f.input :public, label: t('post.public'), input_html: { style: "margin:0px;", class: 'checkstyle' }
-				.col-lg-3.col-md-3.col-sm-3
+				.col-lg-3.col-md-3.col-sm-3.col-xs-6{ style: "margin-bottom: 20px;"}
 					%center
 						= f.input :comments_open, label: t('post.comments_open'), input_html: { style: "margin:0px;", class: 'checkstyle' }
-				.col-lg-3.col-md-3.col-sm-3
+				.col-lg-3.col-md-3.col-sm-3.col-xs-6
 					%center
 						= f.input :likes_enabled, label: t('post.likes_enabled'), input_html: { style: "margin:0px;", class: 'checkstyle'}
-				.col-lg-3.col-md-3.col-sm-3
+				.col-lg-3.col-md-3.col-sm-3.col-xs-6
 					%center
 						= f.input :shared_enabled, label: t('post.shared_enabled'), input_html: { style: "margin:0px;", class: 'checkstyle'}
 		.panel-footer{ style: "margin-bottom: 10px;"}
