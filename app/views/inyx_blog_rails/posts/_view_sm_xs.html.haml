@@ -1,1 +1,31 @@
-_view_sm_xs.html.haml
+= link_to new_post_path, class: "float-button" do
+	%i.fa.fa-plus
+.panel.panel-default{style:"margin-top:50px"}
+	.panel-header
+		.paginator{ "ng-show" => "objects.length > 0"}
+			%center
+				Página {{currentPage+1}} de {{numberOfPages()}}
+			%a.btn.btn-default.next{ "ng-disabled"=>"currentPage >= total_objects/pageSize - 1 || loadingNext", "ng-click"=>"next()", style: "margin-left:3px" }
+				%i.fa.fa-circle-o-notch.fa-spin{ 'ng-show' => "loadingNext" }
+				%i.fa.fa-arrow-right{ 'ng-show' => "!loadingNext" }
+			%a.btn.btn-default.last{'ng-disabled'=>"currentPage == 0 || loadingLast", "ng-click"=>"last()"}
+				%i.fa.fa-circle-o-notch.fa-spin{ 'ng-show' => "loadingLast" }
+				%i.fa.fa-arrow-left{ 'ng-show' => "!loadingLast" }
+	.panel-body#grid{ style: "border-right: 1px solid #e7e7e7;padding-left: 0px;padding-right: 0px;border-top-width: 36px;" }	
+		%table.grid{style: "width:100%;"}
+			%tbody
+				%tr{ class: "select-{{object.checked}}", "ng-click" => "show_object(object)", :id => "row-{{object.id}}", "ng-repeat" => "object in objects | startFrom:currentPage*pageSize | limitTo:pageSize"}
+					%td{ width: "1px;" }
+						.checkboxFour
+							%input.checkboxFourInput{:id => "check-{{object.id}}", :type => "checkbox", "ng-model" => "object.checked", "ng-click" => "selected(object); $event.stopPorpagation();" }
+							%label{ for: "check-{{object.id}}" }
+								%span
+					%td{ style: "text-align:left;" }
+						= link_to "{{show_path(object.id)}}", style: "width:100%;" do
+							{{ object.title }}
+				%tr{"ng-show" => "!objects.length"}
+					%td{:style => "width:100%"}
+						%center
+							%i.fa.fa-frown-o
+							No hay Posts.
+

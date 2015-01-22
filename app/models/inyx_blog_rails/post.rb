@@ -18,7 +18,7 @@ module InyxBlogRails
   		{
   			id: self.id,
   			title: self.title,
-        title_truncate: self.title.truncate(50),
+        title_truncate: self.title.truncate(80),
         image: self.image.url,
   			autor: self.user.name,
         autor_id: self.user.id,

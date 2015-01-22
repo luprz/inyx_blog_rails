@@ -4,4 +4,14 @@ es:
     post: "Post"
   post:
     info: "Información"
+    title: "Título"
+    autor: "Autor"
+    category: "Categoría"
+    subcategory: "Subcategoría"
+    image: "Imagen"
+    public: "¿Publicado?"
+    comments_open: "¿Comentarios abiertos? "
+    likes_enabled: "¿Permitir dar me gusta? "
+    shared_enabled: "¿Permitir compartir? "
+
   

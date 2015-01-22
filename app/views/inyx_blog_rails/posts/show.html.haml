@@ -1,10 +1,18 @@
 = content_for(:title, "Admin - Post | #{@post.title}")
-%div{ style: "padding:30px; padding-bottom:0px;"}
-	.panel.panel-default
-		.panel-heading
-			%i.fa.fa-exclamation-circle
-			= t('post.info')
-		.panel-body
+%div#show-mobile-post
+	.panel.panel-default{style:"margin-top:50px"}
+		.panel-heading#heading-show{ style: "padding-top:5px;"}
+			.actions
+				.title.pull-left{ style: "margin-top:8px;" }
+					%i.fa.fa-pencil
+					Post - 
+					= @post.id
+				= link_to post_path(@post), title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar este usuario?' }, class: "btn btn-default btn-action pull-right" do
+					%i.fa.fa-remove
+				= link_to edit_post_path(@post), title: t('admin.actions.edit'), class: "btn btn-default btn-action pull-right", style: "margin-right:3px;" do
+					%i.fa.fa-pencil		
+		
+		.panel-body#body-show
 			%label= t('post.title')+': '
 			= @post.title.humanize
 			%br/
@@ -17,7 +25,10 @@
 			%label= t('post.subcategory')+': '
 			= @post.subcategory.nil? ? "Sin subcategoría" : @post.subcategory.name
 			%br/
-			.panel.panel-warning{ style: 'margin:0px; margin-top:10px;'}
+			%label= t('post.permalink')+': '
+			= @post.permalink
+			%br/
+			.panel.panel-warning{ style: 'margin-top:10px; padding: 10px;'}
 				.panel-body
 					= raw @post.content
 			%br/
@@ -27,24 +38,24 @@
 			- else
 				Sin imágen
 			%br/
-			.row{ style: 'margin-top:10px;'}
+			.row{ style: 'margin: 0px; margin-top:10px;'}
 				.col-lg-3.col-md-3.col-sm-3
-					%label= t('post.public')+': '
-					= @post.public ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+					%center
+						%label= t('post.public')+': '
+						= @post.public ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
 				.col-lg-3.col-md-3.col-sm-3
-					%label= t('post.comments_open')+': '
-					= @post.comments_open ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+					%center
+						%label= t('post.comments_open')+': '
+						= @post.comments_open ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
 				.col-lg-3.col-md-3.col-sm-3
-					%label= t('post.likes_enabled')+': '
-					= @post.likes_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+					%center
+						%label= t('post.likes_enabled')+': '
+						= @post.likes_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
 				.col-lg-3.col-md-3.col-sm-3
-					%label= t('post.shared_enabled')+': '
-					= @post.shared_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
+					%center
+						%label= t('post.shared_enabled')+': '
+						= @post.shared_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
 			%br/
 			%label= t('post.tags')+': '
 			- @post.tag_list.each do |tag|
-				%span.label.label-info{style: 'font-size: 14px;'}= tag
-			%br/
-		.panel-footer
-			= link_to t('admin.actions.edit'), edit_post_path(@post), class: "btn btn-warning pull-right", style: "color:white"
-			.clearfix
+				%span.label.label-tag{style: 'font-size: 14px;'}= tag

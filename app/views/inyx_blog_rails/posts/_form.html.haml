@@ -4,16 +4,16 @@
 			Datos de usuario
 		.form-p
 			.input#title{ class: "#{@post.title.blank? ? 'input-false' : 'input-great' }" }
-				= f.input :title, label: 'Título', input_html: { class: "input_form", id: "input-title", "ng-focus" => "inputFocus('title')", "ng-blur" => "inputBlur('title')" }
+				= f.input :title, label: t('post.title'), input_html: { class: "input_form", id: "input-title", "ng-focus" => "inputFocus('title')", "ng-blur" => "inputBlur('title')" }
 			= f.input :content, label: false, input_html: { class: "tinymce", style: "height: 200px;" }
 			
 			%div{ "ng-controller" => "formCategoryCtrl", 'ng-init'=> "#{params[:action] == 'new' ? 'init()' : "init(#{@post.category_id}, #{@post.id}, #{@post.to_json}, #{@subcategories.to_json})"}" }
 				.input#category{ class: "#{@post.title.blank? ? 'input-false' : 'input-great' }" }
-					= f.association :category, label: "Categoría", collection: @categories, input_html: { class: "input_form", "ng-click" => "selectAction()", "ng-model" => "post.category_id", id: "input-category", "ng-focus" => "inputFocus('category')", "ng-blur" => "inputBlur('category')" }
+					= f.association :category, label: t('post.category'), collection: @categories, input_html: { class: "input_form", "ng-click" => "selectAction()", "ng-model" => "post.category_id", id: "input-category", "ng-focus" => "inputFocus('category')", "ng-blur" => "inputBlur('category')" }
 						
 				.input#post_subcategory_id{ "ng-if" => "obj.subcategories", class: "#{@post.title.blank? ? 'input-false' : 'input-great' }" }
 					.control-group.select
-						%label.select.control-label{ for: "input-post_subcategory_id"} Subcategoría
+						%label.select.control-label{ for: "input-post_subcategory_id"}= t('post.subcategory')
 					%select{:name => "post[subcategory_id]", class: "input_form", id: "input-post_subcategory_id", "ng-model"=>"obj.subcategories[selected]", "ng-if" => "obj.subcategories", "ng-options" => "subcategory.name for subcategory in obj.subcategories track by subcategory.id", "ng-focus" => "inputFocus('post_subcategory_id')", "ng-blur" => "inputBlur('post_subcategory_id')" }
 						%option{ value: "" }
 					
@@ -25,16 +25,16 @@
 			.row{ style: 'margin-bottom: 50px;'}
 				.col-lg-3.col-md-3.col-sm-3
 					%center
-						= f.input :public, label: "¿Publicar?", input_html: { style: "margin:0px;", class: 'checkstyle' }
+						= f.input :public, label: t('post.public'), input_html: { style: "margin:0px;", class: 'checkstyle' }
 				.col-lg-3.col-md-3.col-sm-3
 					%center
-						= f.input :comments_open, label: "¿Abrir comentarios?", input_html: { style: "margin:0px;", class: 'checkstyle' }
+						= f.input :comments_open, label: t('post.comments_open'), input_html: { style: "margin:0px;", class: 'checkstyle' }
 				.col-lg-3.col-md-3.col-sm-3
 					%center
-						= f.input :likes_enabled, label: "¿Permitir dar me gusta?", input_html: { style: "margin:0px;", class: 'checkstyle'}
+						= f.input :likes_enabled, label: t('post.likes_enabled'), input_html: { style: "margin:0px;", class: 'checkstyle'}
 				.col-lg-3.col-md-3.col-sm-3
 					%center
-						= f.input :shared_enabled, label: "¿Permitir compartir?", input_html: { style: "margin:0px;", class: 'checkstyle'}
+						= f.input :shared_enabled, label: t('post.shared_enabled'), input_html: { style: "margin:0px;", class: 'checkstyle'}
 		.panel-footer{ style: "margin-bottom: 10px;"}
 			= f.submit "Guardar", class: "btn btn-warning pull-right"
 			.clearfix
