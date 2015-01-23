@@ -38,16 +38,16 @@
 				.panel-body
 					= raw @post.content
 			.row{ style: 'margin: 0px; margin-top:10px;'}
-				.col-lg-3.col-md-3.col-sm-3
+				.col-lg-3.col-md-3.col-sm-12
 					%label= t('post.public')+': '
 					= @post.public ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
-				.col-lg-3.col-md-3.col-sm-3
+				.col-lg-3.col-md-3.col-sm-12
 					%label= t('post.comments_open')+': '
 					= @post.comments_open ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
-				.col-lg-3.col-md-3.col-sm-3	
+				.col-lg-3.col-md-3.col-sm-12
 					%label= t('post.likes_enabled')+': '
 					= @post.likes_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
-				.col-lg-3.col-md-3.col-sm-3
+				.col-lg-3.col-md-3.col-sm-12
 					%label= t('post.shared_enabled')+': '
 					= @post.shared_enabled ? "<i class='fa fa-check-circle' style='color:#FFBA3D; font-size:20px;'></i>".html_safe : "<i class='fa fa-minus-circle' style='color:#d9534f; font-size:20px;'></i>".html_safe
 			%br/
