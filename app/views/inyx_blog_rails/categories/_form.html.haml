@@ -1,17 +1,16 @@
 = simple_form_for(@category) do |f|
-  .panel.panel-default
-    .panel-heading
-      %i.fa.fa-th-list
-      Añadir datos
-    .panel-body
-      .form-inputs
-        = f.input :name, label: false, input_html: { class: "form-control", placeholder: 'Nombre' }
+  .container_form 
+    .title_form
+      Datos de usuario
+    .form-p
+      .input#name{ class: "#{@category.name.blank? ? 'input-false' : 'input-great' }"}
+        = f.input :name, input_html: { class: "input_form", id: "input-name",  "ng-focus" => "inputFocus('name')", "ng-blur" => "inputBlur('name')" }
         %br/
-        %label Subcategorías
-        = f.simple_fields_for :subcategories do |c|
-          = render 'subcategory_fields', :f => c
-        .links
-          = link_to_add_association 'añadir subcategoría', f, :subcategories, class: "btn btn-default btn-sm pull-right"
+      = f.simple_fields_for :subcategories do |c|
+        = render 'subcategory_fields', :f => c
+      .links
+        = link_to_add_association 'añadir subcategoría', f, :subcategories, class: "btn btn-default btn-sm pull-right"
+        .clearfix
     .panel-footer
       = f.submit 'Guardar', class: "btn btn-warning pull-right"
       .clearfix
