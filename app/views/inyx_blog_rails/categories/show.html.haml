@@ -1,16 +1,20 @@
 = content_for(:title, "Admin - Post | #{@category.name}")
-%div{ style: "padding:30px; padding-bottom:0px;"}
-	.panel.panel-default
-		.panel-heading
-			%i.fa.fa-exclamation-circle
-			= t('post.info')
-		.panel-body
-			%label Nombre:
-			= @category.name.humanize
-			%br/
-			%label Categorías:
-			- @category.subcategories.each do |sub|
-				%span.label.label-info{style: "font-size:14px;"}= sub.name
-		.panel-footer
-			= link_to "Editar", edit_category_path(@category), class: "btn btn-warning pull-right", style: "color:white;"
-			.clearfix
+%div
+	.panel.panel-default{style:"margin-top:50px"}
+		.panel-heading#heading-show{ style: "padding-top:5px;"}
+			.actions
+				.title.pull-left{ style: "margin-top:8px;" }
+					%i.fa.fa-tags
+					Categoría - 
+					= @category.id
+				= link_to category_path(@category), title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar este usuario?' }, class: "btn btn-default btn-action pull-right" do
+					%i.fa.fa-remove
+				= link_to edit_category_path(@category), title: t('admin.actions.edit'), class: "btn btn-default btn-action pull-right", style: "margin-right:3px;" do
+					%i.fa.fa-pencil
+	.panel-body#body-show
+		%label Nombre:
+		= @category.name
+		%br/
+		%label Subcategorías:
+		= @category.subcategories.map { |sub| sub.name }.join(", ")
+		%br/

@@ -1,7 +1,7 @@
 = simple_form_for(@category) do |f|
   .container_form 
     .title_form
-      Datos de usuario
+      Datos de categoría
     .form-p
       .input#name{ class: "#{@category.name.blank? ? 'input-false' : 'input-great' }"}
         = f.input :name, input_html: { class: "input_form", id: "input-name",  "ng-focus" => "inputFocus('name')", "ng-blur" => "inputBlur('name')" }
