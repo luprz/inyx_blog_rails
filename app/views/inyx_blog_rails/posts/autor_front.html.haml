@@ -1,5 +1,5 @@
 = content_for(:title, "Blog - #{params[:permalink].humanize.gsub("-", " ")}")
 .container
-	.row.blog{'ng-controller'=>'frontIndexCtrl', 'ng-init'=>"init(#{@posts.to_json})" }
+	.row.blog{'ng-controller'=>'frontIndexCtrl', 'ng-init'=>"init(#{@posts.to_json})", "when-scrolled" => "loadMore()" }
 		= render "layouts/inyx_blog_rails/blog/sidebar_left"
 		= render "layouts/inyx_blog_rails/blog/posts_list"

@@ -1,12 +1,12 @@
 .col-lg-9.col-md-9.col-sm-9.col-xs-12
-	.post{ "ng-repeat" => "post in filtered | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" }
+	.post{ "ng-repeat" => "post in posts" }
 		.preview-post.row{ "ng-if" => "post.publicate == true"}
 			.col-lg-9.col-md-9.col-sm-9.col-xs-12
 				%h4.title-post
 					= link_to "{{ post.title | uppercase }}", "/blog/posts/{{post.permalink}}"
 				.image-post
 					%img.thumbnail{ "ng-src" => "{{post.image}}", alt: "{{post.title}}", title: "{{post.title}}" }
-				.content-post{ "ng-bind-html" => "post.content_truncate", style: "text-align:justify;"}
+				.content-post{ "ng-bind-html" => "post.content", style: "text-align:justify;"}
 				.read-more.pull-right
 					= link_to "/blog/posts/{{post.permalink}}" do
 						%i.fa.fa-sign-out
@@ -20,7 +20,7 @@
 					%span.block
 						%i.fa.fa-user
 						POR
-						= link_to "{{post.autor | uppercase}}", "/blog/autor/{{post.autor_id}}/posts"
+						= link_to "{{post.autor | uppercase}}", "/blog/autor/{{post.autor_permalink}}/posts"
 					%span.block
 						%i.fa.fa-folder-open-o
 						POSTEADO EN
@@ -28,5 +28,4 @@
 					%span.block
 						%i.fa.fa-link
 						= link_to "PERMALINK", "/blog/posts/{{post.permalink}}"
-	%pagination.pagination-small{"boundary-links" => "true", "ng-model" => "currentPage", "max-size" => "maxSize", "items-per-page" => "entryLimit", "total-items" => "filtered.length", "previous-text" => "Anterior", "next-text" => "Siguiente", "first-text" => "Primero", "last-text" => "Último" }
 

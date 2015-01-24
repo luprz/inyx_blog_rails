@@ -56,6 +56,8 @@
                 %i.fa.fa-remove
               = link_to "{{edit_path(object_data.id)}}", title: t('admin.actions.edit'), class: "btn btn-default btn-action pull-right", "ng-show" => "object_data", style: "margin-right:3px;" do
                 %i.fa.fa-pencil
+              = link_to "/blog/posts/{{object_data.permalink}}", title: "Ver en la web", class: "btn btn-default btn-action pull-right", "ng-show" => "object_data", style: "margin-right:3px;", target: "_blank" do
+                %i.fa.fa-eye
             .no-actions{ "ng-show" => "!object_data", style: "margin-top:6px;" }
               %i.fa.fa-pencil
               Post

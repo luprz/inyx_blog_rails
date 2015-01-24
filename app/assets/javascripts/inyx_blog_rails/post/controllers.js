@@ -30,19 +30,16 @@ angular.module('post', ['ngSanitize', 'ui.bootstrap'])
 		
   }])
 
-	function frontIndexCtrl($scope, filterFilter) {
+	.controller('frontIndexCtrl', ['$scope','obj', function($scope, object) {
 
 		$scope.init = function(posts) {			
 			$scope.posts = posts;
 		}
 
-		$scope.currentPage = 1; //current page
-    $scope.maxSize = 5; //pagination max size
-    $scope.entryLimit = 6; //max rows for data table
-    
-    $scope.$watch('search', function(term) {
-	    $scope.filtered = filterFilter($scope.posts, term);
-	    $scope.noOfPages = Math.ceil($scope.filtered.length/$scope.entryLimit);
-    })
+		$scope.loadMore = function() {
+			object.load_more($scope, $scope.posts.length);
+		}
 
-  }
+  }])
+
+  

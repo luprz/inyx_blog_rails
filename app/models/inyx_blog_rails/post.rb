@@ -21,6 +21,7 @@ module InyxBlogRails
         title_truncate: self.title.truncate(80),
         image: self.image.url,
   			autor: self.user.name,
+        autor_permalink: self.user.permalink,
         autor_id: self.user.id,
         category_name: self.category.nil? ? nil : self.category.name.humanize,
         category_id: self.category_id,
