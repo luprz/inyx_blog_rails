@@ -21,6 +21,7 @@ angular.module('post').factory('obj', [
         for(var index in data) {
           $scope.posts.push(data[index])
         }
+        console.log("load more")
       }).error(function() {
         console.log("Failed")
       });

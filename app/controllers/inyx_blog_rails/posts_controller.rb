@@ -6,6 +6,25 @@ module InyxBlogRails
     before_filter :authenticate_user!, except: [:show_front, :index_front, :category_front, :subcategory_front, :tag_front, :autor_front]
     layout :resolve_layout
 
+
+    def search_posts 
+      unless params[:query].blank?
+        redirect_to posts_front_search_path(params[:query])
+      else
+        redirect_to index_front_posts_path
+      end
+    end
+
+    def search
+      @posts = Post.search(Post.query params[:query]).records.order('created_at DESC').limit(5).offset(params[:offset])
+      @categories = Category.order(:name).all
+      @recents = Post.order("created_at DESC").limit(5)
+      respond_to do |format|
+        format.html
+        format.json { render :json => @posts }
+      end
+    end
+
     # GET /posts/1
     def show
       respond_to do |format|
@@ -128,7 +147,7 @@ module InyxBlogRails
 
       def resolve_layout
         case action_name
-          when "show_front", "index_front", "category_front", "subcategory_front", "tag_front", "autor_front"
+          when "show_front", "index_front", "category_front", "subcategory_front", "tag_front", "autor_front", "search_posts", "search"
             "application"
           else 
             "admin/application"

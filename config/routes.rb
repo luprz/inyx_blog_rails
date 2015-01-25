@@ -23,6 +23,8 @@ InyxBlogRails::Engine.routes.draw do
   end
 
   scope :blog do
+    get "/posts/search_posts", to: 'posts#search_posts', as: "search_posts"
+    get "/posts/search/:query", to: 'posts#search', as: "posts_front_search"
     get "/posts/:title", to: 'posts#show_front', as: "show_front_posts"
     get "/posts", to: 'posts#index_front', as: "index_front_posts"
     get "/category/:category_permalink/posts", to: "posts#category_front", as: "index_category_posts"
