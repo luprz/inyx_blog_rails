@@ -73,6 +73,7 @@ module InyxBlogRails
 
     # GET /posts/new
     def new
+      permit_user?
       @categories = Category.all
       @post = Post.new
       @subcategories = Category.find(@post.category_id).subcategories if @post.created_at?
@@ -80,6 +81,7 @@ module InyxBlogRails
 
     # GET /posts/1/edit
     def edit
+      permit_user?
       @subcategories = Category.find(@post.category_id).subcategories
       @categories = Category.all
     end
@@ -100,6 +102,7 @@ module InyxBlogRails
 
     # PATCH/PUT /posts/1
     def update
+      permit_user?
       if @post.update(post_params)
         @post.__elasticsearch__.index_document
         redirect_to @post, notice: 'El post ha sido actualizado satisfactoriamente.'
@@ -132,6 +135,13 @@ module InyxBlogRails
             "application"
           else 
             "admin/application"
+        end
+      end
+
+      #authorization
+      def permit_user?
+        if current_user.has_role? :moderator
+          raise CanCan::AccessDenied.new("Acceso denegado", action_name, "/admin/blog/posts")
         end
       end
 
