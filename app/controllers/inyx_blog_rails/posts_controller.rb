@@ -121,7 +121,6 @@ module InyxBlogRails
 
     # PATCH/PUT /posts/1
     def update
-      permit_user?
       if @post.update(post_params)
         @post.__elasticsearch__.index_document
         redirect_to @post, notice: 'El post ha sido actualizado satisfactoriamente.'

@@ -55,13 +55,37 @@ module InyxBlogRails
       { query: { multi_match:  { query: query, fields: [:title, :category_name, :public, :content, :autor, :subcategory_name, :tags] }  }, sort: { id: "desc" }, size: Post.count }
     end
 
+    def self.index(current_user)
+      if current_user.has_role? :redactor
+        Post.where(user_id: current_user.id).order('created_at DESC')
+      else
+        Post.order('created_at DESC')
+      end
+    end
+
+    def self.index_search(objects, current_user)
+      if current_user.has_role? :redactor
+        objects.where(user_id: current_user.id).order('created_at DESC')
+      else
+        objects.order('created_at DESC')
+      end
+    end
+
+    def self.index_total(objects, current_user)
+      if current_user.has_role? :redactor
+        objects.where(user_id: current_user.id).count
+      else
+        objects.order('created_at DESC').count
+      end
+    end
+
     def self.route_index
       "/admin/blog/posts"
     end
 
     def self.multiple_destroy(ids, current_user)
       ids.each do |id|
-        if Post.find(id).user_id != current_user.id
+        if Post.find(id).user_id != current_user.id and !current_user.has_role? :admin
           raise CanCan::AccessDenied.new("Access Denied", :delete, InyxBlogRails::Post)
         end
       end
