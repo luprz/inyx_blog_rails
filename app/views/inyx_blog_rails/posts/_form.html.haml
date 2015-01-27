@@ -1,7 +1,7 @@
 = simple_form_for(@post) do |f|
 	.container_form	
 		.title_form
-			Datos de usuario
+			Datos de del post
 		.form-p
 			.input#title{ class: "#{@post.title.blank? ? 'input-false' : 'input-great' }" }
 				= f.input :title, label: t('post.title'), input_html: { class: "input_form", id: "input-title", "ng-focus" => "inputFocus('title')", "ng-blur" => "inputBlur('title')" }

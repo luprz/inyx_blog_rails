@@ -1,4 +1,4 @@
-angular.module('post', ['ngSanitize', 'ui.bootstrap'])
+angular.module('post', ['ngSanitize'])
 
 	.controller('formCategoryCtrl', ['$scope','obj', function($scope, object) {
 		$scope.obj = object;

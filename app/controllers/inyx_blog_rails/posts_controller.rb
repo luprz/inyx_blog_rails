@@ -5,6 +5,7 @@ module InyxBlogRails
     before_action :set_post, only: [:show, :edit, :update, :destroy]
     before_filter :authenticate_user!, except: [:show_front, :index_front, :category_front, :subcategory_front, :tag_front, :autor_front]
     layout :resolve_layout
+    load_and_authorize_resource
 
 
     def search_posts 
@@ -119,6 +120,7 @@ module InyxBlogRails
 
     # PATCH/PUT /posts/1
     def update
+      permit_user?
       if @post.update(post_params)
         @post.__elasticsearch__.index_document
         redirect_to @post, notice: 'El post ha sido actualizado satisfactoriamente.'

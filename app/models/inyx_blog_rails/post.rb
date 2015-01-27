@@ -54,6 +54,10 @@ module InyxBlogRails
     def self.query(query)
       { query: { multi_match:  { query: query, fields: [:title, :category_name, :public, :content, :autor, :subcategory_name, :tags] }  }, sort: { id: "desc" }, size: Post.count }
     end
+
+    def self.route_index
+      "/admin/blog/posts"
+    end
     
   end
 

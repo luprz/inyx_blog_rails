@@ -3,6 +3,11 @@
     .col-lg-8.col-md-8{ style: "padding:0px;" } 
       .list-wrapper
         .panel.panel-default
+          - flash.each do |name, msg|
+            - if msg.is_a?(String)
+              %div{:class => "alert alert-#{name.to_s == 'notice' ? 'success' : 'danger'} pull-right", id: "message_alerts"}
+                %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+                = content_tag :div, msg, :id => "flash_#{name}"
           .panel-heading#list-heading{ style: "width:67%;"}
             = link_to new_post_path, class: "btn btn-default btn-action", title: t("admin.buttons.new") do
               %i.fa.fa-plus-circle
