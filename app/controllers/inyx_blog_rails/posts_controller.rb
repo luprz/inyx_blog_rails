@@ -5,7 +5,8 @@ module InyxBlogRails
     before_action :set_post, only: [:show, :edit, :update, :destroy]
     before_filter :authenticate_user!, except: [:show_front, :index_front, :category_front, :subcategory_front, :tag_front, :autor_front]
     layout :resolve_layout
-    load_and_authorize_resource
+    load_and_authorize_resource :except => [:index_front, :show_front, :search, :search_posts, :category_front, :subcategory_front, :autor_front]
+
 
 
     def search_posts 

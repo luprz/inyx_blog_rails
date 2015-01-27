@@ -58,6 +58,15 @@ module InyxBlogRails
     def self.route_index
       "/admin/blog/posts"
     end
+
+    def self.multiple_destroy(ids, current_user)
+      ids.each do |id|
+        if Post.find(id).user_id != current_user.id
+          raise CanCan::AccessDenied.new("Access Denied", :delete, InyxBlogRails::Post)
+        end
+      end
+      Post.destroy ids
+    end
     
   end
 
