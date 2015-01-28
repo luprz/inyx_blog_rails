@@ -6,7 +6,7 @@
 					= link_to "{{ post.title | uppercase }}", "/blog/posts/{{post.permalink}}"
 				.image-post
 					%img.thumbnail{ "ng-src" => "{{post.image}}", alt: "{{post.title}}", title: "{{post.title}}" }
-				.content-post{ "ng-bind-html" => "post.content", style: "text-align:justify;"}
+				.content-post{ "ng-bind-html" => "post.content_truncate", style: "text-align:justify;"}
 				.read-more.pull-right
 					= link_to "/blog/posts/{{post.permalink}}" do
 						%i.fa.fa-sign-out
