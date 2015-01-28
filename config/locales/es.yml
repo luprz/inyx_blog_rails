@@ -13,5 +13,13 @@ es:
     comments_open: "¿Comentarios abiertos? "
     likes_enabled: "¿Permitir dar me gusta? "
     shared_enabled: "¿Permitir compartir? "
+  posts:
+    actions:
+      destroy: 
+        confirm: "¿Estas seguro de querer eliminar los posts seleccionados?"
+  categories:
+    actions:
+      destroy: 
+        confirm: "¿Estas seguro de querer eliminar las categorías seleccionadas?, esta acción eliminará todo los posts pertenecientes a ella."
 
   

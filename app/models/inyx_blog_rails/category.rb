@@ -19,7 +19,7 @@ module InyxBlogRails
     end
 
     def self.query(query)
-      { query: { multi_match:  { query: query, fields: [:name, :subcategories] }  }, sort: { id: "desc" } }
+      { query: { multi_match:  { query: query, fields: [:name, :subcategories] }  }, sort: { id: "desc" }, size: Post.count }
     end
 
     def self.get_id(permalink)
@@ -35,6 +35,32 @@ module InyxBlogRails
     def create_permalink
       self.permalink = self.name.downcase.parameterize
     end
+
+    def self.index(current_user)
+      Category.order('created_at DESC')
+    end
+
+    def self.index_search(objects, current_user)
+      objects.order('created_at DESC')
+    end
+
+    def self.index_total(objects, current_user)
+      objects.count
+    end
+
+    def self.route_index
+      "/admin/posts/categories"
+    end
+
+    def self.multiple_destroy(ids, current_user)
+      ids.each do |id|
+        if !current_user.has_role? :admin
+          raise CanCan::AccessDenied.new("Access Denied", :delete, InyxBlogRails::Category)
+        end
+      end
+      Category.destroy ids
+    end
+
   end
   Category.import
 end

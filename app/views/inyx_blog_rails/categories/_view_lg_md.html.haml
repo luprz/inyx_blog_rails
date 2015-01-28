@@ -3,18 +3,25 @@
     .col-lg-9.col-md-9{ style: "padding:0px;" }
       .list-wrapper
         .panel.panel-default
+          - flash.each do |name, msg|
+            - if msg.is_a?(String)
+              %div{:class => "alert alert-#{name.to_s == 'notice' ? 'success' : 'danger'} pull-right", id: "message_alerts"}
+                %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+                = content_tag :div, msg, :id => "flash_#{name}"
           .panel-heading#list-heading
-            = link_to new_category_path, class: "btn btn-default btn-action", title: t("admin.buttons.new") do
-              %i.fa.fa-plus-circle
+            - if can? :new, InyxBlogRails::Category
+              = link_to new_category_path, class: "btn btn-default btn-action", title: t("admin.buttons.new") do
+                %i.fa.fa-plus-circle
             %a.btn.btn-default.btn-action{"ng-click" => "refresh()", "ng-disabled" => "pagesItemsSelected[currentPageServer].length != 0", :title => t("admin.buttons.refresh") }
               %i.fa.fa-refresh#icon-refresh{'ng-show'=>"!loadingRefresh"}
               %i.fa.fa-refresh.fa-spin{'ng-show'=>"loadingRefresh"}
-            %a.btn.btn-default.btn-action{"ng-show" => "objects.length", "ng-click" => "allSelected(objects)", :title => t("admin.buttons.select_all") }
-              %i.fa.fa-square-o{"ng-show" => "!btnDelete"}
-              %i.fa.fa-check-square-o{ "ng-show" => "btnDelete" } 
-            %a.btn.btn-default.btn-action#btn-delete{ "ng-show" => "btnDelete", "ng-click" => "destroy()", :title => t("admin.buttons.trash") }
-              %i.fa.fa-circle-o-notch.fa-spin{ 'ng-show' => "loadingDelete" }
-              %i.fa.fa-trash-o{ 'ng-show' => "!loadingDelete" }
+            - if can? :delete, InyxBlogRails::Category
+              %a.btn.btn-default.btn-action{"ng-show" => "objects.length", "ng-click" => "allSelected(objects)", :title => t("admin.buttons.select_all") }
+                %i.fa.fa-square-o{"ng-show" => "!btnDelete"}
+                %i.fa.fa-check-square-o{ "ng-show" => "btnDelete" } 
+              %a.btn.btn-default.btn-action#btn-delete{ "ng-show" => "btnDelete", "ng-click" => "destroy('¿Estas seguro de querer eliminar las categorías seleccionadas?, esta acción eliminará todo los posts pertenecientes a ella.')", :title => t("admin.buttons.trash") }
+                %i.fa.fa-circle-o-notch.fa-spin{ 'ng-show' => "loadingDelete" }
+                %i.fa.fa-trash-o{ 'ng-show' => "!loadingDelete" }
             .paginator.pull-right{ "ng-show" => "objects.length > 0"}
               %button.btn.btn-default.pull-right.hidden-xs{'disabled'=>"", style:"color:#000; margin-left:3px;"}
                 Página {{currentPage+1}} de {{numberOfPages()}}
@@ -29,11 +36,12 @@
               %table.grid{style: "width:100%"}
                 %tbody
                   %tr{ class: "select-{{object.checked}}", "ng-click" => "show_object(object)", :id => "row-{{object.id}}", "ng-repeat" => "object in objects | startFrom:currentPage*pageSize | limitTo:pageSize" }
-                    %td{ width: "1px;" }
-                      .checkboxFour
-                        %input.checkboxFourInput{:id => "check-{{object.id}}", :type => "checkbox", "ng-model" => "object.checked", "ng-click" => "selected(object); $event.stopPorpagation();" }
-                        %label{ for: "check-{{object.id}}" }
-                          %span
+                    - if can? :delete, InyxBlogRails::Category
+                      %td{ width: "1px;" }
+                        .checkboxFour
+                          %input.checkboxFourInput{:id => "check-{{object.id}}", :type => "checkbox", "ng-model" => "object.checked", "ng-click" => "selected(object); $event.stopPorpagation();" }
+                          %label{ for: "check-{{object.id}}" }
+                            %span
                     %td {{object.name}}
 
     .col-lg-3.col-md-3{ style: "padding:0px;"}
@@ -46,10 +54,12 @@
                 .title.pull-left{ style: "margin-top:6px;" }
                   %i.fa.fa-tags
                   Categoría - {{ object_data.id }}
-                = link_to "{{destroy_path(object_data.id)}}", title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar este post?' }, class: "btn btn-default btn-action pull-right", "ng-show" => "object_data" do
-                  %i.fa.fa-remove
-                = link_to "{{edit_path(object_data.id)}}", title: t('admin.actions.edit'), class: "btn btn-default btn-action pull-right", "ng-show" => "object_data", style: "margin-right:3px;" do
-                  %i.fa.fa-pencil
+                - if can? :destroy, InyxBlogRails::Category
+                  = link_to "{{destroy_path(object_data.id)}}", title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar esta categoría?, esta acción eliminara todo los posts pertenecientes a ella.' }, class: "btn btn-default btn-action pull-right", "ng-show" => "object_data" do
+                    %i.fa.fa-remove
+                - if can? :edit, InyxBlogRails::Category
+                  = link_to "{{edit_path(object_data.id)}}", title: t('admin.actions.edit'), class: "btn btn-default btn-action pull-right", "ng-show" => "object_data", style: "margin-right:3px;" do
+                    %i.fa.fa-pencil
               .no-actions{ "ng-show" => "!object_data", style: "margin-top:6px;" }
                 %i.fa.fa-tag
                 Categoría

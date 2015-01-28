@@ -12,8 +12,9 @@
             - if can? :new, InyxBlogRails::Post
               = link_to new_post_path, class: "btn btn-default btn-action", title: t("admin.buttons.new") do
                 %i.fa.fa-plus-circle
-            = link_to new_category_path, class: "btn btn-default btn-action", title: "Añadir categoría" do
-              %i.fa.fa-tags
+            - if can? :new, InyxBlogRails::Category
+              = link_to new_category_path, class: "btn btn-default btn-action", title: "Añadir categoría" do
+                %i.fa.fa-tags
             %a.btn.btn-default.btn-action{"ng-click" => "refresh()", "ng-disabled" => "pagesItemsSelected[currentPageServer].length != 0", :title => t("admin.buttons.refresh") }
               %i.fa.fa-refresh#icon-refresh{'ng-show'=>"!loadingRefresh"}
               %i.fa.fa-refresh.fa-spin{'ng-show'=>"loadingRefresh"}
@@ -22,7 +23,7 @@
                 %i.fa.fa-square-o{"ng-show" => "!btnDelete"}
                 %i.fa.fa-check-square-o{ "ng-show" => "btnDelete" } 
             - if can? :delete, InyxBlogRails::Post
-              %a.btn.btn-default.btn-action#btn-delete{ "ng-show" => "btnDelete", "ng-click" => "destroy()", :title => t("admin.buttons.trash") }
+              %a.btn.btn-default.btn-action#btn-delete{ "ng-show" => "btnDelete", "ng-click" => "destroy('¿Estas seguro de querer eliminar los posts seleccioandos?')", :title => t("admin.buttons.trash") }
                 %i.fa.fa-circle-o-notch.fa-spin{ 'ng-show' => "loadingDelete" }
                 %i.fa.fa-trash-o{ 'ng-show' => "!loadingDelete" }
             .paginator.pull-right{ "ng-show" => "objects.length > 0"}
