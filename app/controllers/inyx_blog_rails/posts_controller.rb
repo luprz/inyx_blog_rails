@@ -5,7 +5,7 @@ module InyxBlogRails
     before_action :set_post, only: [:show, :edit, :update, :destroy]
     before_filter :authenticate_user!, except: [:show_front, :index_front, :category_front, :subcategory_front, :tag_front, :autor_front]
     layout :resolve_layout
-    load_and_authorize_resource :except => [:index_front, :show_front, :search, :search_posts, :category_front, :subcategory_front, :autor_front]
+    load_and_authorize_resource :except => [:index_front, :show_front, :search, :search_posts, :category_front, :subcategory_front, :autor_front, :tag_front]
 
 
 
@@ -18,9 +18,9 @@ module InyxBlogRails
     end
 
     def search
-      @posts = Post.search(Post.query params[:query]).records.order('created_at DESC').limit(5).offset(params[:offset])
+      @posts = Post.search(Post.query params[:query]).records.where(public: true).order('created_at DESC').limit(5).offset(params[:offset])
       @categories = Category.order(:name).all
-      @recents = Post.order("created_at DESC").limit(5)
+      @recents = Post.where(public: true).order("created_at DESC").limit(5)
       respond_to do |format|
         format.html
         format.json { render :json => @posts }
@@ -36,14 +36,14 @@ module InyxBlogRails
     end
 
     def show_front
-      @recents = Post.order("created_at DESC").limit(5)
+      @recents = Post.where(public: true).order("created_at DESC").limit(5)
       @post = Post.where(permalink: params[:title]).first
       @categories = Category.order(:name).all
     end
 
     def index_front
-      @recents = Post.order("created_at DESC").limit(5)
-      @posts = Post.order('created_at DESC').limit(5).offset(params[:offset])
+      @recents = Post.where(public: true).order("created_at DESC").limit(5)
+      @posts = Post.where(public: true).order('created_at DESC').limit(5).offset(params[:offset])
       @categories = Category.order(:name).all
       respond_to do |format|
         format.html
@@ -52,9 +52,9 @@ module InyxBlogRails
     end
 
     def category_front
-      @recents = Post.order("created_at DESC").limit(5)
+      @recents = Post.where(public: true).order("created_at DESC").limit(5)
       @categories = Category.order(:name).all
-      @posts = Post.where(category_id: Category.get_id(params[:category_permalink])).order('created_at DESC').limit(5).offset(params[:offset])
+      @posts = Post.where(category_id: Category.get_id(params[:category_permalink]), public: true).order('created_at DESC').limit(5).offset(params[:offset])
       respond_to do |format|
         format.html
         format.json { render :json => @posts }
@@ -62,10 +62,10 @@ module InyxBlogRails
     end
 
     def subcategory_front
-      @recents = Post.order("created_at DESC").limit(5)
+      @recents = Post.where(public: true).order("created_at DESC").limit(5)
       category = Category.find_by_permalink(params[:category_permalink])
       subcategory = category.subcategories.find_by_permalink(params[:subcategory_permalink])
-      @posts = Post.where(subcategory_id: subcategory.id).order('created_at DESC').limit(5).offset(params[:offset])
+      @posts = Post.where(subcategory_id: subcategory.id, public: true).order('created_at DESC').limit(5).offset(params[:offset])
       @categories = Category.order(:name).all
       respond_to do |format|
         format.html
@@ -74,8 +74,8 @@ module InyxBlogRails
     end
 
     def tag_front
-      @recents = Post.order("created_at DESC").limit(5)
-      @posts = Post.tagged_with(params[:permalink].gsub("-", " ")).order('created_at DESC');
+      @recents = Post.where(public: true).order("created_at DESC").limit(5)
+      @posts = Post.where(public: true).tagged_with(params[:permalink].gsub("-", " ")).order('created_at DESC');
       @categories = Category.order(:name).limit(5).offset(params[:offset])
       respond_to do |format|
         format.html
@@ -84,8 +84,8 @@ module InyxBlogRails
     end
 
     def autor_front
-      @recents = Post.order("created_at DESC").limit(5)
-      @posts = Post.where(user_id: User.get_id(params[:permalink])).order('created_at DESC').limit(5).offset(params[:offset])
+      @recents = Post.where(public: true).order("created_at DESC").limit(5)
+      @posts = Post.where(user_id: User.get_id(params[:permalink]), public: true).order('created_at DESC').limit(5).offset(params[:offset])
       respond_to do |format|
         format.html
         format.json { render :json => @posts }

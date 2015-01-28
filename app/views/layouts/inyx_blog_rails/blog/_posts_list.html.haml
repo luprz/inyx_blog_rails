@@ -1,6 +1,6 @@
 .col-lg-9.col-md-9.col-sm-9.col-xs-12
 	.post{ "ng-repeat" => "post in posts" }
-		.preview-post.row{ "ng-if" => "post.publicate == true"}
+		.preview-post.row
 			.col-lg-9.col-md-9.col-sm-9.col-xs-12
 				%h4.title-post
 					= link_to "{{ post.title | uppercase }}", "/blog/posts/{{post.permalink}}"

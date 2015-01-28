@@ -1,5 +1,6 @@
-= link_to new_post_path, class: "float-button" do
-	%i.fa.fa-plus
+- if can? :new, InyxBlogRails::Post
+	= link_to new_post_path, class: "float-button" do
+		%i.fa.fa-plus
 .panel.panel-default{style:"margin-top:50px"}
 	.panel-header
 		.paginator{ "ng-show" => "objects.length > 0"}
@@ -15,11 +16,12 @@
 		%table.grid{style: "width:100%;"}
 			%tbody
 				%tr{ class: "select-{{object.checked}}", "ng-click" => "show_object(object)", :id => "row-{{object.id}}", "ng-repeat" => "object in objects | startFrom:currentPage*pageSize | limitTo:pageSize"}
-					%td{ width: "1px;" }
-						.checkboxFour
-							%input.checkboxFourInput{:id => "check-{{object.id}}", :type => "checkbox", "ng-model" => "object.checked", "ng-click" => "selected(object); $event.stopPorpagation();" }
-							%label{ for: "check-{{object.id}}" }
-								%span
+					- if can? :delete, InyxBlogRails::Post
+						%td{ width: "1px;" }
+							.checkboxFour
+								%input.checkboxFourInput{:id => "check-{{object.id}}", :type => "checkbox", "ng-model" => "object.checked", "ng-click" => "selected(object); $event.stopPorpagation();" }
+								%label{ for: "check-{{object.id}}" }
+									%span
 					%td{ style: "text-align:left;" }
 						= link_to "{{show_path(object.id)}}", style: "width:100%;" do
 							{{ object.title }}

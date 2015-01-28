@@ -7,10 +7,12 @@
 					%i.fa.fa-pencil
 					Post - 
 					= @post.id
-				= link_to post_path(@post), title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar este usuario?' }, class: "btn btn-default btn-action pull-right" do
-					%i.fa.fa-remove
-				= link_to edit_post_path(@post), title: t('admin.actions.edit'), class: "btn btn-default btn-action pull-right", style: "margin-right:3px;" do
-					%i.fa.fa-pencil		
+				- if can? :destroy, InyxBlogRails::Post
+					= link_to post_path(@post), title: t('admin.actions.delete'), :method => :delete, :data => { :confirm => '¿Estas seguro de querer eliminar este usuario?' }, class: "btn btn-default btn-action pull-right" do
+						%i.fa.fa-remove
+				- if can? :edit, InyxBlogRails::Post
+					= link_to edit_post_path(@post), title: t('admin.actions.edit'), class: "btn btn-default btn-action pull-right", style: "margin-right:3px;" do
+						%i.fa.fa-pencil		
 		
 		- unless @post.image.blank?
 			= image_tag @post.image, style: "width:100%", class: "hidden-lg hidden-md"

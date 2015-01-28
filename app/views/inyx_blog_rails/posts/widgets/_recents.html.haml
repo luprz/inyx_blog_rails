@@ -2,10 +2,9 @@
 	%h4 RECIENTES
 	%ul
 		- @recents.each do |recent|
-			- if recent.public == true
-				%li
-					= link_to "/blog/posts/#{recent.permalink}" do
-						%i.fa.fa-sign-out
-						= recent.title
-					.datetime
-						%small= recent.created_at.strftime("%d %b. %Y / %H:%M")
+			%li
+				= link_to "/blog/posts/#{recent.permalink}" do
+					%i.fa.fa-sign-out
+					= recent.title
+				.datetime
+					%small= recent.created_at.strftime("%d %b. %Y / %H:%M")
