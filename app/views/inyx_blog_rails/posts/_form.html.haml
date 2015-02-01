@@ -6,6 +6,7 @@
 			- unless current_user.has_role? :moderator
 				.input#title{ class: "#{@post.title.blank? ? 'input-false' : 'input-great' }" }
 					= f.input :title, label: t('post.title'), input_html: { class: "input_form", id: "input-title", "ng-focus" => "inputFocus('title')", "ng-blur" => "inputBlur('title')" }
+				%br/
 				= f.input :content, label: false, input_html: { class: "tinymce", style: "height: 200px;" }
 				
 				%div{ "ng-controller" => "formCategoryCtrl", 'ng-init'=> "#{params[:action] == 'new' ? 'init()' : "init(#{@post.category_id}, #{@post.id}, #{@post.to_json}, #{@subcategories.to_json})"}" }
