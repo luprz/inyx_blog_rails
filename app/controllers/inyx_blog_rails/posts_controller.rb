@@ -150,7 +150,7 @@ module InyxBlogRails
       def resolve_layout
         case action_name
           when "show_front", "index_front", "category_front", "subcategory_front", "tag_front", "autor_front", "search_posts", "search"
-            "application"
+            "inyx_blog_rails/frontend/application"
           else 
             "admin/application"
         end
