@@ -37,13 +37,7 @@ rake db:migrate
 añadir la siguiente linea a su manifesto javascript `application.js`
 
 ```ruby
-//= require inyx_blog_rails/application
-```
-
-añadir la siguiente linea a su manifesto javascript `application.css`
-
-```ruby
-*= require inyx_blog_rails/application
+//= require blog/admin/application
 ```
 
 añadir la siguiente ruta a su archivo routes.rb

@@ -10,6 +10,16 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
+//= require jquery_ujs
+//= require angular
+//= require angular-route
+//= require turbolinks
+//= require bootstrap
 //= require angular-sanitize
-//= require cocoon
+//= require_tree ../admin/post
 //= require_tree .
+
+$(document).on('ready page:load', function(arguments){
+	angular.bootstrap(document.body, ['inyxmater']);
+});
