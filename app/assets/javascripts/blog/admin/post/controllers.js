@@ -30,7 +30,7 @@ angular.module('post', ['ngSanitize'])
 		
   }])
 
-	.controller('frontIndexCtrl', ['$scope','obj', function($scope, object) {
+	.controller('frontIndexCtrl', ['$scope','obj', '$sce', function($scope, object, $sce) {
 
 		$scope.init = function(posts) {			
 			$scope.posts = posts;
@@ -38,6 +38,10 @@ angular.module('post', ['ngSanitize'])
 
 		$scope.loadMore = function() {
 			object.load_more($scope, $scope.posts.length);
+		}
+
+		$scope.content_html = function(html) {
+			return $sce.trustAsHtml(html);
 		}
 
   }])

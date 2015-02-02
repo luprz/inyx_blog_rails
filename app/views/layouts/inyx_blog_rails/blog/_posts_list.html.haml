@@ -4,9 +4,9 @@
 			.col-lg-9.col-md-9.col-sm-9.col-xs-12
 				%h4.title-post
 					= link_to "{{ post.title | uppercase }}", "/blog/posts/{{post.permalink}}"
-				.image-post
+				.image-post{ "ng-if" => "post.image" }
 					%img.thumbnail{ "ng-src" => "{{post.image}}", alt: "{{post.title}}", title: "{{post.title}}" }
-				.content-post{ "ng-bind-html" => "post.content_truncate", style: "text-align:justify;"}
+				.content-post{ "ng-bind-html" => "content_html(post.content_truncate)", style: "text-align:justify;"}
 				.read-more.pull-right
 					= link_to "/blog/posts/{{post.permalink}}" do
 						%i.fa.fa-sign-out
