@@ -73,7 +73,7 @@
             .no-actions{ "ng-show" => "!object_data", style: "margin-top:6px;" }
               %i.fa.fa-pencil
               Post
-          .panel-body
+          .panel-body{ 'ng-controller'=>'frontIndexCtrl' }
             .data{ style: "height: {{windowHeight-104}}px;" }
               %img{ "ng-show" => "object_data.image", "ng-src" => "{{object_data.image}}", alt: "{{posts.title}}", title: "{{posts.title}}" }
               .attributes{ "ng-show" => "object_data" }
@@ -102,7 +102,7 @@
                 {{object_data.updated_at | date : format : timezone}}
                 %br/
                 %label Contenido:
-                .panel.panel-warning{"ng-bind-html" => "object_data.content", style: 'margin-top:10px; padding: 10px; border-color: #4758d3; border-radius:0px; text-align:justify;' }
+                .panel.panel-warning{"ng-bind-html" => "content_html(object_data.content)", style: 'margin-top:10px; padding: 10px; border-color: #4758d3; border-radius:0px; text-align:justify;' }
                 %br/
               .no-data{ "ng-show" => "!object_data"}
                 %center
