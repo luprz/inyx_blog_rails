@@ -31,7 +31,7 @@ module InyxBlogRails
         subcategory_permalink: self.subcategory.nil? ? nil : self.subcategory.permalink,
         tags: self.tag_list.to_s,
   			content: self.content,
-        content_truncate: self.content.truncate(350),
+        content_truncate: self.content.truncate(500),
   			public: self.public ? "Publicado" : "Despublicado",
         publicate: self.public,
         comments_open: self.comments_open,
