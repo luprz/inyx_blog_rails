@@ -1,7 +1,7 @@
 = content_for(:title, "Blog - #{@post.title}")
 = content_for(:description, strip_tags(@post.content).truncate(180))
 .container
-	.row.blog{'ng-controller'=>'frontIndexCtrl', 'ng-init'=>"init(#{@post.to_json})", "when-scrolled" => "loadMore()" }
+	.row.blog{'ng-controller'=>'frontIndexCtrl', 'ng-init'=>"init(#{@post.to_json})"}
 		= render "layouts/inyx_blog_rails/blog/navbar_categories"
 		= render "layouts/inyx_blog_rails/blog/sidebar_left"
 		= render "layouts/inyx_blog_rails/blog/post"

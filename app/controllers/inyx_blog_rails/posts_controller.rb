@@ -39,6 +39,10 @@ module InyxBlogRails
       @recents = Post.where(public: true).order("created_at DESC").limit(5)
       @post = Post.where(permalink: params[:title]).first
       @categories = Category.order(:name).all
+      respond_to do |format|
+        format.html
+        format.json { render :json => nil }
+      end
     end
 
     def index_front

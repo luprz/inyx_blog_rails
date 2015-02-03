@@ -4,7 +4,7 @@
 			.col-lg-9.col-md-9.col-sm-9.col-xs-12
 				%h4.title-post
 					= link_to "{{ posts.title | uppercase }}", "/blog/posts/{{post.permalink}}"
-				.image-post{ "ng-if" => "post.image" }
+				.image-post{ "ng-if" => "posts.image" }
 					%img.thumbnail{ "ng-src" => "{{posts.image}}", alt: "{{posts.title}}", title: "{{posts.title}}" }
 				.content-post{ "ng-bind-html" => "content_html(posts.content)", style: "text-align:justify;"}
 				.row.socials{ "ng-if" => "posts.shared_enabled == true" }
