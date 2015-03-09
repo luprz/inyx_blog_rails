@@ -90,6 +90,7 @@ module InyxBlogRails
     def autor_front
       @recents = Post.where(public: true).order("created_at DESC").limit(5)
       @posts = Post.where(user_id: User.get_id(params[:permalink]), public: true).order('created_at DESC').limit(5).offset(params[:offset])
+      @categories = Category.order(:name).all
       respond_to do |format|
         format.html
         format.json { render :json => @posts }
